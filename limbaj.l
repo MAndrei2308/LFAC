@@ -5,10 +5,13 @@ using namespace std;
 %}
 %option noyywrap
 %%
-([-]?[1-9][0-9]*|0) {yylval=atoi(yytext); return VAL;}
-([-]?[0]\.[0-9]+|[1-9][0-9]*\.[0-9]+) {yylval=atoi(yytext); return FLOAT_VAL;}
+([-]?[1-9][0-9]*|0) {return VAL;}
+([-]?[0]\.[0-9]+|[1-9][0-9]*\.[0-9]+) {return FLOAT_VAL;}
 "adevarat"|"fals" {return BOOL_VAL;}
-"intreg"|"real"|"bolean"|"caracter"|"sir" {yylval.string = strdup(yytext);return TYPE;}
+"intreg"|"real"|"bolean"|"caracter"|"sir" {return TYPE;}
+"constanta" {return CONST;}
+"void" {return VOID;}
+"return" {return RETURN;}
 "incepe_program:" {return START;}
 "termina_program" {return END;}
 "daca" {return IF;}
@@ -17,7 +20,7 @@ using namespace std;
 "cat_timp" {return WHILE;}
 "functie" {return FUNCION;}
 "clasa" {return CLASS;}
-[a-zA-Z][a-zA-Z0-9]* {yylval.string = strdup(yytext); return ID;}
+[a-zA-Z][a-zA-Z0-9]* {return ID;}
 ":=" {return ASSIGN;}
 "<" {return LT;}
 ">" {return GT;}
@@ -33,7 +36,6 @@ using namespace std;
 "||" {return OR;}
 "++" {return INC;}
 "--" {return DEC;}
-[0-9]+ {return NR;}
 [ \t] ;
 \n {yylineno++;}
 . {return yytext[0];}
