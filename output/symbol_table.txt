@@ -1,0 +1,15 @@
+TABELUL DE SIMBOLURI PENTRU VARIABILE
+
+NUME           TIP       VALOARE   LOCATIE        
+-------------------------------------------
+test1          int       0         global         
+
+
+
+
+
+TABELUL DE SIMBOLURI PENTRU FUNCTII
+
+NUME           TIP_RETURN          PARAMETRI           LOCATIE        
+---------------------------------------------------------------
+fct1           void                int                 global         
