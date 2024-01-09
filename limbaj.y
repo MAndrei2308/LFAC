@@ -87,8 +87,7 @@ clasa: CLASS ID '{' bloc_instr_clasa '}'
 bloc_instr_clasa: variabila_TYPE ';'
                 | variabila_TYPE ';' bloc_instr_clasa
                 | functie_nume
-                | functie_nume bloc_instr_clasa
-                | 
+                | functie_nume bloc_instr_clasa 
                 ;
 
 variabila_TYPE: TYPE variabila
@@ -115,3 +114,5 @@ param_functie: TYPE ID
 
 functie: ID '(' ')'
        | ID '(' param_functie')'
+
+%%

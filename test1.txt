@@ -1,0 +1,11 @@
+intreg a;
+real b;
+sir c;
+
+intreg f(intreg a, intre b);
+
+incepe_program
+    a := b;
+    b := 5;
+    f(4,5,6,7);
+termina_program
