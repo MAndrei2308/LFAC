@@ -130,7 +130,7 @@ expr: value
     ;
 
 afirmatie: type ID ASSIGN value {strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');}
-         | type ID {strcpy(nume,ID);strcpy(locatie,"Local"); adaugare('V');}
+         | type ID {strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');}
          | ID ASSIGN expr
          | ID comparatie expr
          | arg3
