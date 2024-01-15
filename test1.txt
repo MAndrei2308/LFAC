@@ -1,0 +1,23 @@
+intreg a;
+real b;
+sir c;
+
+clasa MyClass{
+    intreg aa;
+    real ab;
+
+    functie intreg MyIntFunction () { intreg aaa; }
+    functie void MyVoidFunction ( intreg v, intreg w )
+    {
+        intreg rez := v < w;
+    } 
+}
+
+functie real MyFunction ();
+
+incepe_program:
+    a := 5;
+    b := 6.23;
+    constanta intreg d := 1;
+    a := 4.5;
+termina_program

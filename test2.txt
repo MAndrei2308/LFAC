@@ -1,0 +1,24 @@
+intreg main()
+{
+    intreg x:=1;
+    real f;
+    intreg a:=3;
+    intreg x;
+    a:=x*3+5;
+    daca(x>a)
+    {
+        a:=x*3+100;
+        daca(x>a)
+        {
+            a:=x*3+100;
+        }
+        altfel
+        {
+            x:=a*3+100;
+        }
+    }
+    altfel
+    {
+        x:=a*3+100;
+    }
+}
