@@ -70,8 +70,13 @@
 
 #include <iostream>
 #include <vector>
+#include <iomanip>
+#include <cstring>
+#include <fstream>
 
 using namespace std;
+
+ofstream file("symbol_table.txt");
 
 extern FILE* yyin;
 extern char* yytext;
@@ -79,7 +84,43 @@ extern int yylineno;
 void yyerror(const char* s);
 extern int yylex();
 
-#line 83 "limbaj1.tab.c"
+struct {
+    char *nume;
+    char *info;
+    char *tip;
+    char *valoare;
+    char *locatie;
+} symbol_table[101];
+
+int count=0;
+
+char nume[40];
+char tip[40];
+char val[40];
+char locatie[40];
+void adaugare(char c)
+{
+    if(c=='V')
+    {
+        symbol_table[count].nume=strdup(nume);
+        symbol_table[count].info=strdup("Variabila");
+        symbol_table[count].tip=strdup(tip);
+        symbol_table[count].valoare=strdup(val);
+        symbol_table[count].locatie=strdup(locatie);
+        count++;
+    }
+    else if(c=='F')
+    {
+        symbol_table[count].nume=strdup(nume);
+        symbol_table[count].info=strdup("Functie");
+        symbol_table[count].tip=strdup(tip);
+        symbol_table[count].valoare=strdup("-");
+        symbol_table[count].locatie=strdup(locatie);
+        count++;
+    }
+}
+
+#line 124 "limbaj1.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -542,13 +583,13 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int8 yyrline[] =
+static const yytype_uint8 yyrline[] =
 {
-       0,    27,    27,    30,    33,    34,    35,    38,    39,    40,
-      41,    42,    43,    44,    45,    48,    49,    52,    54,    56,
-      57,    59,    61,    62,    63,    64,    67,    70,    71,    72,
-      75,    76,    77,    78,    79,    80,    83,    84,    85,    86,
-      87,    90,    91,    92,    93,    94,    98
+       0,    68,    68,    71,    74,    75,    76,    79,    80,    81,
+      82,    83,    84,    85,    86,    89,    90,    93,    95,    97,
+      98,   101,   103,   104,   105,   106,   109,   112,   113,   114,
+     117,   118,   119,   120,   121,   122,   125,   126,   127,   128,
+     129,   132,   133,   134,   135,   136,   140
 };
 #endif
 
@@ -1400,13 +1441,73 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 27 "limbaj1.y"
+#line 68 "limbaj1.y"
                                              {printf("Programul este corect din punct de vedere sintactic!\n");}
-#line 1406 "limbaj1.tab.c"
+#line 1447 "limbaj1.tab.c"
+    break;
+
+  case 3:
+#line 71 "limbaj1.y"
+              {strcpy(locatie,"Global"); strcpy(nume,yytext);adaugare('F');}
+#line 1453 "limbaj1.tab.c"
+    break;
+
+  case 4:
+#line 74 "limbaj1.y"
+          { strcpy(tip,"INT");}
+#line 1459 "limbaj1.tab.c"
+    break;
+
+  case 5:
+#line 75 "limbaj1.y"
+            { strcpy(tip,"FLOAT");}
+#line 1465 "limbaj1.tab.c"
+    break;
+
+  case 6:
+#line 76 "limbaj1.y"
+           { strcpy(tip,"CHAR");}
+#line 1471 "limbaj1.tab.c"
+    break;
+
+  case 19:
+#line 97 "limbaj1.y"
+                           {strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');}
+#line 1477 "limbaj1.tab.c"
+    break;
+
+  case 27:
+#line 112 "limbaj1.y"
+           {strcpy(val,yytext);}
+#line 1483 "limbaj1.tab.c"
+    break;
+
+  case 28:
+#line 113 "limbaj1.y"
+                 {strcpy(val,yytext);}
+#line 1489 "limbaj1.tab.c"
+    break;
+
+  case 41:
+#line 132 "limbaj1.y"
+                                {strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');}
+#line 1495 "limbaj1.tab.c"
+    break;
+
+  case 42:
+#line 133 "limbaj1.y"
+                   {strcpy(nume,ID);strcpy(locatie,"Local"); adaugare('V');}
+#line 1501 "limbaj1.tab.c"
+    break;
+
+  case 46:
+#line 140 "limbaj1.y"
+     {strcpy(locatie,"Global");}
+#line 1507 "limbaj1.tab.c"
     break;
 
 
-#line 1410 "limbaj1.tab.c"
+#line 1511 "limbaj1.tab.c"
 
       default: break;
     }
@@ -1638,7 +1739,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 100 "limbaj1.y"
+#line 142 "limbaj1.y"
 
 void yyerror(const char* s)
 {
@@ -1647,7 +1748,37 @@ void yyerror(const char* s)
 
 int main(int argc, char** argv)
 {
-     yyin=fopen(argv[1],"r");
-     yyparse();
+    yyin=fopen(argv[1],"r");
+    yyparse();
 
+    if(!file.is_open())
+    {
+        cerr << "Eroare la deschiderea fisierului.\n";
+        return 0;
+    }
+
+    int nume_width = 15;
+    int info_width = 15;
+    int tip_width = 10;
+    int valoare_width = 10;
+    int locatie_width = 15;
+
+    file << "TABELUL DE SIMBOLURI PENTRU VARIABILE\n\n";
+    file << left << setw(nume_width)    << "NUME"
+                 << setw(info_width)     << "INFO"
+                 << setw(tip_width)     << "TIP"
+                 << setw(valoare_width) << "VALOARE" 
+                 << setw(locatie_width) << "LOCATIE"
+                 << "\n";
+    file << "----------------------------------------------------------\n";
+    
+    for(int i=0;i<count;i++)
+    {
+        file << left << setw(nume_width)    << symbol_table[i].nume 
+                     << setw(info_width)     << symbol_table[i].info
+                     << setw(tip_width)     << symbol_table[i].tip
+                     << setw(valoare_width) << symbol_table[i].valoare
+                     << setw(locatie_width) << symbol_table[i].locatie
+                     << "\n";
+    }
 }

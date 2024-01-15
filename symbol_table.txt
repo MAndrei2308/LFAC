@@ -1,15 +1,9 @@
 TABELUL DE SIMBOLURI PENTRU VARIABILE
 
-NUME           TIP       VALOARE   LOCATIE        
--------------------------------------------
-test1          int       0         global         
-
-
-
-
-
-TABELUL DE SIMBOLURI PENTRU FUNCTII
-
-NUME           TIP_RETURN          PARAMETRI           LOCATIE        
----------------------------------------------------------------
-fct1           void                int                 global         
+NUME           INFO           TIP       VALOARE   LOCATIE        
+----------------------------------------------------------
+main           Functie        INT       -         Global         
+1              Variabila      INT       1         Local          
+;              Variabila      FLOAT     1         Local          
+3              Variabila      INT       3         Local          
+;              Variabila      INT       3         Local          
