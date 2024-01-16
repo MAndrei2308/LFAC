@@ -3,7 +3,8 @@ TABELUL DE SIMBOLURI PENTRU VARIABILE
 NUME           INFO           TIP       VALOARE   LOCATIE        
 ----------------------------------------------------------
 main           Functie        INT       -         Global         
-1              Variabila      INT       1         Local          
-;              Variabila      FLOAT     1         Local          
-3              Variabila      INT       3         Local          
-;              Variabila      INT       3         Local          
+x              Variabila      INT       1         Local          
+f              Variabila      FLOAT     1         Local          
+a              Variabila      INT       3         Local          
+x              Variabila      INT       3         Local          
+b              Variabila      INT       1         Local          

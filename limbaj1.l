@@ -25,7 +25,10 @@ using namespace std;
 "cat_timp" {return WHILE;}
 "functie" {return FUNCTION;}
 "clasa" {return CLASS;}
-[a-zA-Z][a-zA-Z0-9]* {return ID;}
+[a-zA-Z][a-zA-Z0-9]* {
+    yylval.strval = strdup(yytext);
+    return ID;
+}
 "++" {return INC;}
 "--" {return DEC;}
 "<=" {return LE;}

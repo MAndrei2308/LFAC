@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.5.1.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -31,8 +31,9 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
 #ifndef YY_YY_LIMBAJ1_TAB_H_INCLUDED
 # define YY_YY_LIMBAJ1_TAB_H_INCLUDED
@@ -44,53 +45,69 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    VAL = 258,
-    FLOAT_VAL = 259,
-    BOOL_VAL = 260,
-    INT = 261,
-    FLOAT = 262,
-    BOOL = 263,
-    CHAR = 264,
-    CONST = 265,
-    VOID = 266,
-    RETURN = 267,
-    START = 268,
-    END = 269,
-    IF = 270,
-    ELSE = 271,
-    FOR = 272,
-    WHILE = 273,
-    FUNCTION = 274,
-    CLASS = 275,
-    ID = 276,
-    ASSIGN = 277,
-    LT = 278,
-    GT = 279,
-    LE = 280,
-    GE = 281,
-    EQ = 282,
-    NE = 283,
-    ADD = 284,
-    SUB = 285,
-    MUL = 286,
-    DIV = 287,
-    AND = 288,
-    OR = 289,
-    INC = 290,
-    DEC = 291,
-    CHARACTER = 292,
-    STRING = 293
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    ID = 258,                      /* ID  */
+    INT = 259,                     /* INT  */
+    FLOAT = 260,                   /* FLOAT  */
+    CHAR = 261,                    /* CHAR  */
+    STRING = 262,                  /* STRING  */
+    VAL = 263,                     /* VAL  */
+    FLOAT_VAL = 264,               /* FLOAT_VAL  */
+    BOOL_VAL = 265,                /* BOOL_VAL  */
+    BOOL = 266,                    /* BOOL  */
+    CONST = 267,                   /* CONST  */
+    VOID = 268,                    /* VOID  */
+    RETURN = 269,                  /* RETURN  */
+    START = 270,                   /* START  */
+    END = 271,                     /* END  */
+    IF = 272,                      /* IF  */
+    ELSE = 273,                    /* ELSE  */
+    FOR = 274,                     /* FOR  */
+    WHILE = 275,                   /* WHILE  */
+    FUNCTION = 276,                /* FUNCTION  */
+    CLASS = 277,                   /* CLASS  */
+    ASSIGN = 278,                  /* ASSIGN  */
+    LT = 279,                      /* LT  */
+    GT = 280,                      /* GT  */
+    LE = 281,                      /* LE  */
+    GE = 282,                      /* GE  */
+    EQ = 283,                      /* EQ  */
+    NE = 284,                      /* NE  */
+    ADD = 285,                     /* ADD  */
+    SUB = 286,                     /* SUB  */
+    MUL = 287,                     /* MUL  */
+    DIV = 288,                     /* DIV  */
+    AND = 289,                     /* AND  */
+    OR = 290,                      /* OR  */
+    INC = 291,                     /* INC  */
+    DEC = 292,                     /* DEC  */
+    CHARACTER = 293                /* CHARACTER  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 46 "limbaj1.y"
+
+    int intval;       // pentru tokenii care returnează valori întregi
+    float floatval;   // pentru tokenii care returnează valori reale
+    char* strval;     // pentru tokenii care returnează șiruri de caractere
+
+#line 108 "limbaj1.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -98,6 +115,8 @@ typedef int YYSTYPE;
 
 extern YYSTYPE yylval;
 
+
 int yyparse (void);
+
 
 #endif /* !YY_YY_LIMBAJ1_TAB_H_INCLUDED  */

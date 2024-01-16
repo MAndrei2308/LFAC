@@ -4,6 +4,8 @@ intreg main()
     real f;
     intreg a:=3;
     intreg x;
+    intreg b:=1;
+    b:=b+1;
     a:=x*3+5;
     daca(x>a)
     {

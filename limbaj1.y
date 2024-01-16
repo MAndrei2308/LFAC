@@ -4,24 +4,15 @@
 #include <iomanip>
 #include <cstring>
 #include <fstream>
+#include "symbol_table.cpp"
 
 using namespace std;
-
-ofstream file("symbol_table.txt");
 
 extern FILE* yyin;
 extern char* yytext;
 extern int yylineno;
 void yyerror(const char* s);
 extern int yylex();
-
-struct {
-    char *nume;
-    char *info;
-    char *tip;
-    char *valoare;
-    char *locatie;
-} symbol_table[101];
 
 int count=0;
 
@@ -52,7 +43,15 @@ void adaugare(char c)
 }
 %}
 
-%token VAL FLOAT_VAL BOOL_VAL INT FLOAT BOOL CHAR CONST VOID RETURN START END IF ELSE FOR WHILE FUNCTION CLASS ID ASSIGN LT GT LE GE EQ NE ADD SUB MUL DIV AND OR INC DEC CHARACTER STRING
+%union {
+    int intval;       // pentru tokenii care returnează valori întregi
+    float floatval;   // pentru tokenii care returnează valori reale
+    char* strval;     // pentru tokenii care returnează șiruri de caractere
+}
+
+%token <strval> ID INT FLOAT CHAR STRING
+%type <strval> expr value
+%token VAL FLOAT_VAL BOOL_VAL BOOL CONST VOID RETURN START END IF ELSE FOR WHILE FUNCTION CLASS ASSIGN LT GT LE GE EQ NE ADD SUB MUL DIV AND OR INC DEC CHARACTER 
 
 %left ASSIGN
 %left OR
@@ -65,6 +64,7 @@ void adaugare(char c)
 %start program
 
 %%
+
 program: cfv main '(' ')' '{' bloc_instr '}' {printf("Programul este corect din punct de vedere sintactic!\n");}
     ;
 
@@ -111,7 +111,7 @@ conditie: value comparatie value
 
 value: VAL {strcpy(val,yytext);}
      | FLOAT_VAL {strcpy(val,yytext);}
-     | ID
+     | ID {strcpy(val, yytext); }
      ;
 
 comparatie: LT
@@ -123,14 +123,28 @@ comparatie: LT
           ;
 
 expr: value
-    | expr ADD expr
+    | expr ADD expr 
+    { 
+    char* a = get_value($1, count);
+    char* b = get_value($3, count);
+    int val_a = atoi(a);
+    int val_b = atoi(b);
+    cout << val_a << " " << val_b << endl;
+    int sum = val_a + val_b;
+    char temp[40]; // Presupunând că 40 este suficient pentru a stoca rezultatul
+    sprintf(temp, "%d", sum); // Convertește suma înapoi în string
+    strcpy(val, temp); // Copiază rezultatul în val
+    cout << val << endl;
+    // cout << "p: " << a << " " << a << endl;
+    // cout << "\ntest: " << val << "\n";
+    }
     | expr SUB expr
     | expr MUL expr
     | expr DIV expr
     ;
 
-afirmatie: type ID ASSIGN value {strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');}
-         | type ID {strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');}
+afirmatie: type ID ASSIGN value {strcpy(nume, $2);strcpy(locatie,"Local"); adaugare('V'); }
+         | type ID {strcpy(nume,$2);strcpy(locatie,"Local"); adaugare('V');}
          | ID ASSIGN expr
          | ID comparatie expr
          | arg3
@@ -149,35 +163,5 @@ int main(int argc, char** argv)
 {
     yyin=fopen(argv[1],"r");
     yyparse();
-
-    if(!file.is_open())
-    {
-        cerr << "Eroare la deschiderea fisierului.\n";
-        return 0;
-    }
-
-    int nume_width = 15;
-    int info_width = 15;
-    int tip_width = 10;
-    int valoare_width = 10;
-    int locatie_width = 15;
-
-    file << "TABELUL DE SIMBOLURI PENTRU VARIABILE\n\n";
-    file << left << setw(nume_width)    << "NUME"
-                 << setw(info_width)     << "INFO"
-                 << setw(tip_width)     << "TIP"
-                 << setw(valoare_width) << "VALOARE" 
-                 << setw(locatie_width) << "LOCATIE"
-                 << "\n";
-    file << "----------------------------------------------------------\n";
-    
-    for(int i=0;i<count;i++)
-    {
-        file << left << setw(nume_width)    << symbol_table[i].nume 
-                     << setw(info_width)     << symbol_table[i].info
-                     << setw(tip_width)     << symbol_table[i].tip
-                     << setw(valoare_width) << symbol_table[i].valoare
-                     << setw(locatie_width) << symbol_table[i].locatie
-                     << "\n";
-    }
+    print_table(count);
 }
