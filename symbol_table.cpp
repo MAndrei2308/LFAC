@@ -68,3 +68,13 @@ void value_returned(char* nume, int count, char* value)
     }
 
 }
+
+bool declarare_multipla(char* nume, int count)
+{
+    for (int i = 0; i < count; i++)
+    {
+        if (strcmp(nume, symbol_table[i].nume) == 0)
+            return true;
+    }
+    return false;
+}

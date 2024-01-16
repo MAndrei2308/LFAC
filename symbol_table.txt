@@ -6,5 +6,4 @@ main           Functie        INT       -         Global
 x              Variabila      INT       128       Local          
 f              Variabila      FLOAT     neinit    Local          
 a              Variabila      INT       648       Local          
-x              Variabila      INT       128       Local          
 b              Variabila      INT       2         Local          

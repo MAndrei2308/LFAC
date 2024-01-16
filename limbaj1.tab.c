@@ -592,9 +592,9 @@ static const yytype_uint8 yyrline[] =
 {
        0,    68,    68,    71,    74,    75,    76,    79,    80,    81,
       82,    83,    84,    85,    86,    89,    90,    93,    95,    97,
-      98,   101,   103,   104,   105,   106,   109,   112,   113,   114,
-     117,   118,   119,   120,   121,   122,   125,   126,   140,   152,
-     164,   178,   179,   180,   181,   182,   186
+     104,   107,   109,   110,   111,   112,   115,   118,   119,   120,
+     123,   124,   125,   126,   127,   128,   131,   132,   146,   158,
+     170,   184,   192,   200,   201,   202,   206
 };
 #endif
 
@@ -1244,31 +1244,36 @@ yyreduce:
     break;
 
   case 19: /* arg1: type ID ASSIGN value  */
-#line 97 "limbaj1.y"
-                           {strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');}
-#line 1250 "limbaj1.tab.c"
+#line 98 "limbaj1.y"
+    {   if (declarare_multipla((yyvsp[-2].strval), count) == true)printf("Declarare multipla\n"); 
+        else 
+        {
+            strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');
+        }
+        }
+#line 1255 "limbaj1.tab.c"
     break;
 
   case 27: /* value: VAL  */
-#line 112 "limbaj1.y"
+#line 118 "limbaj1.y"
            {strcpy(val,yytext);}
-#line 1256 "limbaj1.tab.c"
+#line 1261 "limbaj1.tab.c"
     break;
 
   case 28: /* value: FLOAT_VAL  */
-#line 113 "limbaj1.y"
+#line 119 "limbaj1.y"
                  {strcpy(val,yytext);}
-#line 1262 "limbaj1.tab.c"
+#line 1267 "limbaj1.tab.c"
     break;
 
   case 29: /* value: ID  */
-#line 114 "limbaj1.y"
+#line 120 "limbaj1.y"
           {strcpy(val, yytext); }
-#line 1268 "limbaj1.tab.c"
+#line 1273 "limbaj1.tab.c"
     break;
 
   case 37: /* expr: expr ADD expr  */
-#line 127 "limbaj1.y"
+#line 133 "limbaj1.y"
     { 
     char* a = get_value((yyvsp[-2].strval), count);
     char* b = get_value((yyvsp[0].strval), count);
@@ -1282,11 +1287,11 @@ yyreduce:
     // cout << "p: " << a << " " << a << endl;
     // cout << "\ntest: " << val << "\n";
     }
-#line 1286 "limbaj1.tab.c"
+#line 1291 "limbaj1.tab.c"
     break;
 
   case 38: /* expr: expr SUB expr  */
-#line 141 "limbaj1.y"
+#line 147 "limbaj1.y"
     { 
     char* a = get_value((yyvsp[-2].strval), count);
     char* b = get_value((yyvsp[0].strval), count);
@@ -1298,11 +1303,11 @@ yyreduce:
     strcpy(val, temp);
     value_returned((yyvsp[-2].strval), count, val);
     }
-#line 1302 "limbaj1.tab.c"
+#line 1307 "limbaj1.tab.c"
     break;
 
   case 39: /* expr: expr MUL expr  */
-#line 153 "limbaj1.y"
+#line 159 "limbaj1.y"
     { 
     char* a = get_value((yyvsp[-2].strval), count);
     char* b = get_value((yyvsp[0].strval), count);
@@ -1314,11 +1319,11 @@ yyreduce:
     strcpy(val, temp);
     value_returned((yyvsp[-2].strval), count, val);
     }
-#line 1318 "limbaj1.tab.c"
+#line 1323 "limbaj1.tab.c"
     break;
 
   case 40: /* expr: expr DIV expr  */
-#line 165 "limbaj1.y"
+#line 171 "limbaj1.y"
     { 
     char* a = get_value((yyvsp[-2].strval), count);
     char* b = get_value((yyvsp[0].strval), count);
@@ -1330,29 +1335,41 @@ yyreduce:
     strcpy(val, temp);
     value_returned((yyvsp[-2].strval), count, val);
     }
-#line 1334 "limbaj1.tab.c"
+#line 1339 "limbaj1.tab.c"
     break;
 
   case 41: /* afirmatie: type ID ASSIGN value  */
-#line 178 "limbaj1.y"
-                                {strcpy(nume, (yyvsp[-2].strval));strcpy(locatie,"Local"); adaugare('V'); }
-#line 1340 "limbaj1.tab.c"
+#line 185 "limbaj1.y"
+            {
+            if (declarare_multipla((yyvsp[-2].strval), count) == true)printf("Declarare multipla\n"); 
+             else 
+                {
+                    strcpy(nume,(yyvsp[-2].strval));strcpy(locatie,"Local"); adaugare('V');
+                }
+            }
+#line 1351 "limbaj1.tab.c"
     break;
 
   case 42: /* afirmatie: type ID  */
-#line 179 "limbaj1.y"
-                   {{strcpy(val, "neinit"); }strcpy(nume,(yyvsp[0].strval));strcpy(locatie,"Local"); adaugare('V');}
-#line 1346 "limbaj1.tab.c"
+#line 193 "limbaj1.y"
+         {
+            if (declarare_multipla((yyvsp[0].strval), count) == true)printf("Declarare multipla\n"); 
+             else 
+                {
+                    {strcpy(val, "neinit"); }strcpy(nume,(yyvsp[0].strval));strcpy(locatie,"Local"); adaugare('V');
+                }
+            }
+#line 1363 "limbaj1.tab.c"
     break;
 
   case 46: /* cfv: %empty  */
-#line 186 "limbaj1.y"
+#line 206 "limbaj1.y"
      {strcpy(locatie,"Global");}
-#line 1352 "limbaj1.tab.c"
+#line 1369 "limbaj1.tab.c"
     break;
 
 
-#line 1356 "limbaj1.tab.c"
+#line 1373 "limbaj1.tab.c"
 
       default: break;
     }
@@ -1545,7 +1562,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 188 "limbaj1.y"
+#line 208 "limbaj1.y"
 
 void yyerror(const char* s)
 {

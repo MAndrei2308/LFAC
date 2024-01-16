@@ -94,7 +94,13 @@ while: WHILE '(' conditie ')' '{' bloc_instr '}';
 
 for: FOR '(' arg1 ';' arg2 ';' arg3 ')' '{' bloc_instr '}';
 
-arg1: type ID ASSIGN value {strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');}
+arg1: type ID ASSIGN value 
+    {   if (declarare_multipla($2, count) == true)printf("Declarare multipla\n"); 
+        else 
+        {
+            strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');
+        }
+        }
     | ID ASSIGN value
     ;
 
@@ -175,8 +181,22 @@ expr: value
     }
     ;
 
-afirmatie: type ID ASSIGN value {strcpy(nume, $2);strcpy(locatie,"Local"); adaugare('V'); }
-         | type ID {{strcpy(val, "neinit"); }strcpy(nume,$2);strcpy(locatie,"Local"); adaugare('V');}
+afirmatie: type ID ASSIGN value
+            {
+            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n"); 
+             else 
+                {
+                    strcpy(nume,$2);strcpy(locatie,"Local"); adaugare('V');
+                }
+            }
+         | type ID 
+         {
+            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n"); 
+             else 
+                {
+                    {strcpy(val, "neinit"); }strcpy(nume,$2);strcpy(locatie,"Local"); adaugare('V');
+                }
+            }
          | ID ASSIGN expr
          | ID comparatie expr
          | arg3
