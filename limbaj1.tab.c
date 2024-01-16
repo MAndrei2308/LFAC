@@ -593,8 +593,8 @@ static const yytype_uint8 yyrline[] =
        0,    68,    68,    71,    74,    75,    76,    79,    80,    81,
       82,    83,    84,    85,    86,    89,    90,    93,    95,    97,
       98,   101,   103,   104,   105,   106,   109,   112,   113,   114,
-     117,   118,   119,   120,   121,   122,   125,   126,   141,   142,
-     143,   146,   147,   148,   149,   150,   154
+     117,   118,   119,   120,   121,   122,   125,   126,   140,   152,
+     164,   178,   179,   180,   181,   182,   186
 };
 #endif
 
@@ -1274,38 +1274,85 @@ yyreduce:
     char* b = get_value((yyvsp[0].strval), count);
     int val_a = atoi(a);
     int val_b = atoi(b);
-    cout << val_a << " " << val_b << endl;
     int sum = val_a + val_b;
-    char temp[40]; // Presupunând că 40 este suficient pentru a stoca rezultatul
-    sprintf(temp, "%d", sum); // Convertește suma înapoi în string
-    strcpy(val, temp); // Copiază rezultatul în val
-    cout << val << endl;
+    char temp[40]; 
+    sprintf(temp, "%d", sum);
+    strcpy(val, temp);
+    value_returned((yyvsp[-2].strval), count, val);
     // cout << "p: " << a << " " << a << endl;
     // cout << "\ntest: " << val << "\n";
     }
-#line 1287 "limbaj1.tab.c"
+#line 1286 "limbaj1.tab.c"
+    break;
+
+  case 38: /* expr: expr SUB expr  */
+#line 141 "limbaj1.y"
+    { 
+    char* a = get_value((yyvsp[-2].strval), count);
+    char* b = get_value((yyvsp[0].strval), count);
+    int val_a = atoi(a);
+    int val_b = atoi(b);
+    int sum = val_a - val_b;
+    char temp[40]; 
+    sprintf(temp, "%d", sum);
+    strcpy(val, temp);
+    value_returned((yyvsp[-2].strval), count, val);
+    }
+#line 1302 "limbaj1.tab.c"
+    break;
+
+  case 39: /* expr: expr MUL expr  */
+#line 153 "limbaj1.y"
+    { 
+    char* a = get_value((yyvsp[-2].strval), count);
+    char* b = get_value((yyvsp[0].strval), count);
+    int val_a = atoi(a);
+    int val_b = atoi(b);
+    int sum = val_a * val_b;
+    char temp[40]; 
+    sprintf(temp, "%d", sum);
+    strcpy(val, temp);
+    value_returned((yyvsp[-2].strval), count, val);
+    }
+#line 1318 "limbaj1.tab.c"
+    break;
+
+  case 40: /* expr: expr DIV expr  */
+#line 165 "limbaj1.y"
+        { 
+    char* a = get_value((yyvsp[-2].strval), count);
+    char* b = get_value((yyvsp[0].strval), count);
+    int val_a = atoi(a);
+    int val_b = atoi(b);
+    int sum = val_a / val_b;
+    char temp[40]; 
+    sprintf(temp, "%d", sum);
+    strcpy(val, temp);
+    value_returned((yyvsp[-2].strval), count, val);
+    }
+#line 1334 "limbaj1.tab.c"
     break;
 
   case 41: /* afirmatie: type ID ASSIGN value  */
-#line 146 "limbaj1.y"
+#line 178 "limbaj1.y"
                                 {strcpy(nume, (yyvsp[-2].strval));strcpy(locatie,"Local"); adaugare('V'); }
-#line 1293 "limbaj1.tab.c"
+#line 1340 "limbaj1.tab.c"
     break;
 
   case 42: /* afirmatie: type ID  */
-#line 147 "limbaj1.y"
-                   {strcpy(nume,(yyvsp[0].strval));strcpy(locatie,"Local"); adaugare('V');}
-#line 1299 "limbaj1.tab.c"
+#line 179 "limbaj1.y"
+                   {{strcpy(val, "neinit"); }strcpy(nume,(yyvsp[0].strval));strcpy(locatie,"Local"); adaugare('V');}
+#line 1346 "limbaj1.tab.c"
     break;
 
   case 46: /* cfv: %empty  */
-#line 154 "limbaj1.y"
+#line 186 "limbaj1.y"
      {strcpy(locatie,"Global");}
-#line 1305 "limbaj1.tab.c"
+#line 1352 "limbaj1.tab.c"
     break;
 
 
-#line 1309 "limbaj1.tab.c"
+#line 1356 "limbaj1.tab.c"
 
       default: break;
     }
@@ -1498,7 +1545,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 156 "limbaj1.y"
+#line 188 "limbaj1.y"
 
 void yyerror(const char* s)
 {

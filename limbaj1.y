@@ -122,26 +122,57 @@ comparatie: LT
           | NE
           ;
 
-expr: value { strcpy(val, yytext); adaugare('V'); }
+expr: value 
     | expr ADD expr 
     { 
     char* a = get_value($1, count);
     char* b = get_value($3, count);
     int val_a = atoi(a);
     int val_b = atoi(b);
-    //cout << val_a << " " << val_b << endl;
     int sum = val_a + val_b;
-    char temp[40]; // Presupunând că 40 este suficient pentru a stoca rezultatul
-    sprintf(temp, "%d", sum); // Convertește suma înapoi în string
-    strcpy(val, temp); // Copiază rezultatul în val
-    cout << val << endl;
+    char temp[40]; 
+    sprintf(temp, "%d", sum);
+    strcpy(val, temp);
     value_returned($1, count, val);
     // cout << "p: " << a << " " << a << endl;
     // cout << "\ntest: " << val << "\n";
     }
     | expr SUB expr
+    { 
+    char* a = get_value($1, count);
+    char* b = get_value($3, count);
+    int val_a = atoi(a);
+    int val_b = atoi(b);
+    int sum = val_a - val_b;
+    char temp[40]; 
+    sprintf(temp, "%d", sum);
+    strcpy(val, temp);
+    value_returned($1, count, val);
+    }
     | expr MUL expr
+    { 
+    char* a = get_value($1, count);
+    char* b = get_value($3, count);
+    int val_a = atoi(a);
+    int val_b = atoi(b);
+    int sum = val_a * val_b;
+    char temp[40]; 
+    sprintf(temp, "%d", sum);
+    strcpy(val, temp);
+    value_returned($1, count, val);
+    }
     | expr DIV expr
+    { 
+    char* a = get_value($1, count);
+    char* b = get_value($3, count);
+    int val_a = atoi(a);
+    int val_b = atoi(b);
+    int sum = val_a / val_b;
+    char temp[40]; 
+    sprintf(temp, "%d", sum);
+    strcpy(val, temp);
+    value_returned($1, count, val);
+    }
     ;
 
 afirmatie: type ID ASSIGN value {strcpy(nume, $2);strcpy(locatie,"Local"); adaugare('V'); }
