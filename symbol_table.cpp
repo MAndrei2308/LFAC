@@ -56,14 +56,15 @@ char* get_value(char* nume, int count)
         if(strcmp(nume, symbol_table[i].nume) == 0)
             return symbol_table[i].valoare;
     }
+    return nullptr;
 }
 
-char* value_returned(char* nume, int count, char* value)
+void value_returned(char* nume, int count, char* value)
 {
     for(int i = 0; i < count; i++)
     {
         if(strcmp(nume, symbol_table[i].nume) == 0)
             strcpy(symbol_table[i].valoare, value);
     }
-    
+
 }

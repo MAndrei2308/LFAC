@@ -1319,7 +1319,7 @@ yyreduce:
 
   case 40: /* expr: expr DIV expr  */
 #line 165 "limbaj1.y"
-        { 
+    { 
     char* a = get_value((yyvsp[-2].strval), count);
     char* b = get_value((yyvsp[0].strval), count);
     int val_a = atoi(a);
