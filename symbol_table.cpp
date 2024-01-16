@@ -65,4 +65,5 @@ char* value_returned(char* nume, int count, char* value)
         if(strcmp(nume, symbol_table[i].nume) == 0)
             strcpy(symbol_table[i].valoare, value);
     }
+    
 }
