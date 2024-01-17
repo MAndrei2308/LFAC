@@ -1,3 +1,6 @@
+intreg z:=10;
+
+
 intreg main()
 {
     intreg x:=1;
@@ -7,7 +10,10 @@ intreg main()
     b:=b+1;
     a:=x*3+5;
     caracter g:='a';
+    bolean ok := adevarat;
+    real v[10];
     sir bbbb := "Denis";
+    TypeOf(a);
     daca(x>a)
     {
         a:=x*3+100;

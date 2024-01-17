@@ -68,8 +68,13 @@ void Eval(char* arg)
         }
     }
 }
+struct {
+        char* type;
+        int size;
+    } arraytype;
 
 %}
+
 
 %union {
     int intval;       // pentru tokenii care returnează valori întregi
@@ -78,10 +83,10 @@ void Eval(char* arg)
     char charval;
 }
 
-%token <strval> ID INT FLOAT STR STRING CHARACTER
-%type <strval> expr value
+%token <strval> ID INT FLOAT STR STRING CHARACTER VAL
 %token <charval> CHAR
-%token VAL FLOAT_VAL BOOL_VAL BOOL CONST VOID RETURN START END EVAL TYPEOF IF ELSE FOR WHILE FUNCTION CLASS ASSIGN LT GT LE GE EQ NE ADD SUB MUL DIV AND OR INC DEC
+%token FLOAT_VAL BOOL_VAL BOOL CONST VOID RETURN START END EVAL TYPEOF IF ELSE FOR WHILE FUNCTION CLASS ASSIGN LT GT LE GE EQ NE ADD SUB MUL DIV AND OR INC DEC
+%type <strval> expr value
 
 %left ASSIGN
 %left OR
@@ -104,6 +109,16 @@ main: type ID {strcpy(locatie,"Global"); strcpy(nume,yytext);adaugare('F');}
 type: INT { strcpy(tip,"INT");}
     | FLOAT { strcpy(tip,"FLOAT");}
     ;
+
+array: type ID '[' VAL ']' {
+             if (declarare_multipla($2, count) == true)printf("Declarare multipla\n"); 
+             else 
+                {
+                    arraytype.size=atoi(yytext);
+                    strcpy(nume,yytext-4);
+                    strcpy(locatie,"Local"); adaugare('V');
+                }
+            }
 
 bloc_instr: if
           | while
@@ -301,14 +316,50 @@ afirmatie: type ID ASSIGN value
             else
             { strcpy(tip,"STRING");  strcpy(val, "neinit"); strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');}
          }
+         | BOOL ID ASSIGN BOOL_VAL{
+            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n");
+            else{
+                strcpy(tip,"BOOL");  strcpy(val,yytext); strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');
+            }
+         }
+         | BOOL ID {
+            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n");
+            else{
+                strcpy(tip,"BOOL");  strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');
+            }
+         }
+         | array
          | ID ASSIGN expr
          | ID comparatie expr
          | arg3
          ;
 
 
-cfv: {strcpy(locatie,"Global");}
+cfv:  clasa cfv
+    | functie cfv
+    | var_glob cfv
+    |
    ;
+
+clasa: CLASS ID '{' bloc_clasa '}' ';'
+     ;
+
+functie: FUNCTION ID '(' ')' '{' bloc_functie '}'
+       | FUNCTION ID '(' param ')' '{' bloc_functie '}'
+       ;
+
+param: type ID ',' param
+     | type
+     ;
+
+var_glob: afirmatie
+        ;
+
+bloc_clasa: bloc_instr
+          ;
+
+bloc_functie: bloc_instr
+            ;
 %%
 void yyerror(const char* s)
 {

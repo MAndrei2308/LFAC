@@ -2,10 +2,3 @@ TABELUL DE SIMBOLURI PENTRU VARIABILE
 
 NUME           INFO           TIP       VALOARE   LOCATIE        
 ----------------------------------------------------------
-main           Functie        INT       -         Global         
-x              Variabila      INT       128       Local          
-f              Variabila      FLOAT     neinit    Local          
-a              Variabila      INT       648       Local          
-b              Variabila      INT       2         Local          
-g              Variabila      CHAR      'a'       Local          
-bbbb           Variabila      STRING    "Denis"   Local          
