@@ -6,6 +6,7 @@ intreg main()
     intreg b:=1;
     b:=b+1;
     a:=x*3+5;
+    caracter g:='a';
     daca(x>a)
     {
         a:=x*3+100;

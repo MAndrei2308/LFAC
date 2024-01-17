@@ -25,6 +25,8 @@ using namespace std;
 "cat_timp" {return WHILE;}
 "functie" {return FUNCTION;}
 "clasa" {return CLASS;}
+"TypeOf" {return TYPEOF;}
+"Eval" {return EVAL;}
 [a-zA-Z][a-zA-Z0-9]* {
     yylval.strval = strdup(yytext);
     return ID;
