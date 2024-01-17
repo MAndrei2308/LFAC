@@ -59,7 +59,6 @@ void Eval(char* arg)
     {
         if(strcmp(symbol_table[i].nume,arg)==0)
         {
-
         }
     }
 }
@@ -70,11 +69,13 @@ void Eval(char* arg)
     int intval;       // pentru tokenii care returnează valori întregi
     float floatval;   // pentru tokenii care returnează valori reale
     char* strval;     // pentru tokenii care returnează șiruri de caractere
+    char charval;
 }
 
-%token <strval> ID INT FLOAT CHAR STRING
-%type <strval> expr value value_char
-%token VAL FLOAT_VAL BOOL_VAL BOOL CONST VOID RETURN START END EVAL TYPEOF IF ELSE FOR WHILE FUNCTION CLASS ASSIGN LT GT LE GE EQ NE ADD SUB MUL DIV AND OR INC DEC CHARACTER 
+%token <strval> ID INT FLOAT STR STRING CHARACTER
+%type <strval> expr value
+%token <charval> CHAR
+%token VAL FLOAT_VAL BOOL_VAL BOOL CONST VOID RETURN START END EVAL TYPEOF IF ELSE FOR WHILE FUNCTION CLASS ASSIGN LT GT LE GE EQ NE ADD SUB MUL DIV AND OR INC DEC
 
 %left ASSIGN
 %left OR
@@ -146,9 +147,6 @@ value: VAL {strcpy(val,yytext);}
      | ID {strcpy(val, yytext); }
      ;
 
-value_char: ID
-          ;
-
 
 comparatie: LT
           | GT
@@ -219,10 +217,15 @@ afirmatie: type ID ASSIGN value
                     strcpy(nume,$2);strcpy(locatie,"Local"); adaugare('V');
                 }
             }
-         | CHAR ID ASSIGN "'" value_char "'" {
+         | CHAR ID ASSIGN CHARACTER {
             if (declarare_multipla($2, count) == true)printf("Declarare multipla\n");
             else
-            { strcpy(tip,"CHAR"); strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');}
+            { strcpy(tip,"CHAR"); strcpy(nume, $2); strcpy(val,yytext); strcpy(locatie,"Local"); adaugare('V');}
+         }
+         | STR ID ASSIGN STRING {
+            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n");
+            else
+            { strcpy(tip,"STRING"); strcpy(nume, $2); strcpy(val,yytext); strcpy(locatie,"Local"); adaugare('V');}
          }
          | type ID 
          {
@@ -232,10 +235,15 @@ afirmatie: type ID ASSIGN value
                     {strcpy(val, "neinit"); }strcpy(nume,$2);strcpy(locatie,"Local"); adaugare('V');
                 }
             }
-            | CHAR ID {
+         | CHAR ID {
             if (declarare_multipla($2, count) == true)printf("Declarare multipla\n");
             else
             { strcpy(tip,"CHAR");  strcpy(val, "neinit"); strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');}
+            }
+         | STR ID {
+            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n");
+            else
+            { strcpy(tip,"STRING");  strcpy(val, "neinit"); strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');}
          }
          | ID ASSIGN expr
          | ID comparatie expr

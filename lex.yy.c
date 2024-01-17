@@ -865,7 +865,7 @@ YY_RULE_SETUP
 case 8:
 YY_RULE_SETUP
 #line 16 "limbaj1.l"
-{return STRING;}
+{return STR;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP

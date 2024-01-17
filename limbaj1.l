@@ -13,7 +13,7 @@ using namespace std;
 "real" {return FLOAT;}
 "bolean" {return BOOL;}
 "caracter" {return CHAR;}
-"sir" {return STRING;}
+"sir" {return STR;}
 "constanta" {return CONST;}
 "void" {return VOID;}
 "return" {return RETURN;}
