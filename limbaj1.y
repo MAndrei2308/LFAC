@@ -15,6 +15,7 @@ void yyerror(const char* s);
 extern int yylex();
 
 int count=0;
+int valid = 1;
 
 char nume[40];
 char tip[40];
@@ -42,15 +43,20 @@ void adaugare(char c)
     }
 }
 
-void TypeOf(char* arg)
+char* TypeOf(char* arg)
 {
+    int OK = 0;
     for(int i=0;i<count;i++)
     {
         if(strcmp(symbol_table[i].nume,arg)==0)
         {
-
+            // printf("%s\n",symbol_table[i].tip);
+            // OK = 1;
+            return symbol_table[i].tip;
         }
     }
+    //if(OK == 0)printf("%s was not declared\n", arg);
+    return nullptr;
 }
 
 void Eval(char* arg)
@@ -89,7 +95,7 @@ void Eval(char* arg)
 
 %%
 
-program: cfv main '(' ')' '{' bloc_instr '}' {printf("Programul este corect din punct de vedere sintactic!\n");}
+program: cfv main '(' ')' '{' bloc_instr '}' {if(valid == 1)printf("Programul este corect din punct de vedere sintactic!\n");}
     ;
 
 main: type ID {strcpy(locatie,"Global"); strcpy(nume,yytext);adaugare('F');}
@@ -161,51 +167,101 @@ expr: value
     { 
     char* a = get_value($1, count);
     char* b = get_value($3, count);
-    int val_a = atoi(a);
-    int val_b = atoi(b);
-    int sum = val_a + val_b;
-    char temp[40]; 
-    sprintf(temp, "%d", sum);
-    strcpy(val, temp);
-    value_returned($1, count, val);
-    // cout << "p: " << a << " " << a << endl;
-    // cout << "\ntest: " << val << "\n";
+    char* a_type;
+    char* b_type;
+    a_type = TypeOf($1);
+    b_type = TypeOf($3);
+    if (strcmp(a_type, b_type) == 0)
+        {
+            int val_a = atoi(a);
+            int val_b = atoi(b);
+            int sum = val_a + val_b;
+            char temp[40]; 
+            sprintf(temp, "%d", sum);
+            strcpy(val, temp);
+            value_returned($1, count, val);
+            // cout << "p: " << a << " " << a << endl;
+            // cout << "\ntest: " << val << "\n";
+        }
+    else {
+        printf("Adunarea intre doua tipuri diferite nu este permisa!\n");
+        valid = 0;
+        }
     }
     | expr SUB expr
     { 
     char* a = get_value($1, count);
     char* b = get_value($3, count);
-    int val_a = atoi(a);
-    int val_b = atoi(b);
-    int sum = val_a - val_b;
-    char temp[40]; 
-    sprintf(temp, "%d", sum);
-    strcpy(val, temp);
-    value_returned($1, count, val);
+    char* a_type;
+    char* b_type;
+    a_type = TypeOf($1);
+    b_type = TypeOf($3);
+    if (strcmp(a_type, b_type) == 0)
+        {
+            int val_a = atoi(a);
+            int val_b = atoi(b);
+            int sum = val_a - val_b;
+            char temp[40]; 
+            sprintf(temp, "%d", sum);
+            strcpy(val, temp);
+            value_returned($1, count, val);
+            // cout << "p: " << a << " " << a << endl;
+            // cout << "\ntest: " << val << "\n";
+        }
+    else {
+        printf("Scaderea intre doua tipuri diferite nu este permisa!\n");
+        valid = 0;
+        }
     }
     | expr MUL expr
     { 
     char* a = get_value($1, count);
     char* b = get_value($3, count);
-    int val_a = atoi(a);
-    int val_b = atoi(b);
-    int sum = val_a * val_b;
-    char temp[40]; 
-    sprintf(temp, "%d", sum);
-    strcpy(val, temp);
-    value_returned($1, count, val);
+    char* a_type;
+    char* b_type;
+    a_type = TypeOf($1);
+    b_type = TypeOf($3);
+    if (strcmp(a_type, b_type) == 0)
+        {
+            int val_a = atoi(a);
+            int val_b = atoi(b);
+            int sum = val_a * val_b;
+            char temp[40]; 
+            sprintf(temp, "%d", sum);
+            strcpy(val, temp);
+            value_returned($1, count, val);
+            // cout << "p: " << a << " " << a << endl;
+            // cout << "\ntest: " << val << "\n";
+        }
+    else {
+        printf("Inmultirea intre doua tipuri diferite nu este permisa!\n");
+        valid = 0;
+        }
     }
     | expr DIV expr
     { 
     char* a = get_value($1, count);
     char* b = get_value($3, count);
-    int val_a = atoi(a);
-    int val_b = atoi(b);
-    int sum = val_a / val_b;
-    char temp[40]; 
-    sprintf(temp, "%d", sum);
-    strcpy(val, temp);
-    value_returned($1, count, val);
+    char* a_type;
+    char* b_type;
+    a_type = TypeOf($1);
+    b_type = TypeOf($3);
+    if (strcmp(a_type, b_type) == 0)
+        {
+            int val_a = atoi(a);
+            int val_b = atoi(b);
+            int sum = val_a / val_b;
+            char temp[40]; 
+            sprintf(temp, "%d", sum);
+            strcpy(val, temp);
+            value_returned($1, count, val);
+            // cout << "p: " << a << " " << a << endl;
+            // cout << "\ntest: " << val << "\n";
+        }
+    else {
+        printf("Impartirea intre doua tipuri diferite nu este permisa!\n");
+        valid = 0;
+        }
     }
     ;
 
