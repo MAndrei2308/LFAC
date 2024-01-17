@@ -43,6 +43,40 @@ void adaugare(char c)
     }
 }
 
+// struct arrayInfo {
+//         char type[15];
+//         int size;
+//         char name[20];
+//         vector <int> values;
+//     } arraytype;
+
+// void adaugare_sir(char* name, int size)
+// {
+//     arrayInfo array;
+//     strcpy(array.name,name);
+//     strcpy(array.type,"int");
+//     array.size=size;
+//     array.values.resize(size);
+//     arraytype.push_back(array);
+// }
+
+// int getArrayElement(char* name, int index)
+// {
+//     for(auto& array : arraytype)
+//         if (strcmp(array.name, name) == 0)
+//             return array.values[index];
+//     return -1;
+// }
+
+// void setArrayElement(char* name, int index, int value)
+// {
+//     for (auto& array: arraytype)
+//         if (strcmp(array.name, name) == 0)
+//             array.values[index] = value;
+//             return;
+// }
+
+
 char* TypeOf(char* arg)
 {
     int OK = 0;
@@ -68,10 +102,6 @@ void Eval(char* arg)
         }
     }
 }
-struct {
-        char* type;
-        int size;
-    } arraytype;
 
 %}
 
@@ -85,7 +115,7 @@ struct {
 
 %token <strval> ID INT FLOAT STR STRING CHARACTER VAL
 %token <charval> CHAR
-%token FLOAT_VAL BOOL_VAL BOOL CONST VOID RETURN START END EVAL TYPEOF IF ELSE FOR WHILE FUNCTION CLASS ASSIGN LT GT LE GE EQ NE ADD SUB MUL DIV AND OR INC DEC
+%token MAIN FLOAT_VAL BOOL_VAL BOOL CONST VOID RETURN START END EVAL TYPEOF IF ELSE FOR WHILE FUNCTION CLASS ASSIGN LT GT LE GE EQ NE ADD SUB MUL DIV AND OR INC DEC
 %type <strval> expr value
 
 %left ASSIGN
@@ -100,24 +130,36 @@ struct {
 
 %%
 
-program: cfv main '(' ')' '{' bloc_instr '}' {if(valid == 1)printf("Programul este corect din punct de vedere sintactic!\n");}
+program: cfv main {if(valid == 1)printf("Programul este corect din punct de vedere sintactic!\n");}
     ;
 
-main: type ID {strcpy(locatie,"Global"); strcpy(nume,yytext);adaugare('F');}
+main: type MAIN '(' ')' '{' bloc_instr '}' {strcpy(locatie,"Global"); strcpy(nume,"main");adaugare('F');}
     ;
+
+cfv:  var_glob ';'
+    
+    ;
+
+var_glob: type ID ASSIGN value {strcpy(val,yytext);strcpy(locatie,"Global"); strcpy(nume,$2);adaugare('V');}
+        ;
 
 type: INT { strcpy(tip,"INT");}
     | FLOAT { strcpy(tip,"FLOAT");}
+    | CONST INT { strcpy(tip,"CONST INT");}
+    | CONST FLOAT { strcpy(tip,"CONST INT");}
     ;
 
 array: type ID '[' VAL ']' {
-             if (declarare_multipla($2, count) == true)printf("Declarare multipla\n"); 
-             else 
-                {
-                    arraytype.size=atoi(yytext);
+            //  if (declarare_multipla($2, count) == true)printf("Declarare multipla\n"); 
+            //  else 
+            //     {
+                    // arraytype.size=atoi(yytext);
                     strcpy(nume,yytext-4);
-                    strcpy(locatie,"Local"); adaugare('V');
-                }
+                    // adaugare_sir(nume, arraytype.size);
+                    strcpy(locatie,"Local"); 
+                    strcpy(val,"[...]");
+                    adaugare('V');
+            //     }
             }
 
 bloc_instr: if
@@ -334,32 +376,6 @@ afirmatie: type ID ASSIGN value
          | arg3
          ;
 
-
-cfv:  clasa cfv
-    | functie cfv
-    | var_glob cfv
-    |
-   ;
-
-clasa: CLASS ID '{' bloc_clasa '}' ';'
-     ;
-
-functie: FUNCTION ID '(' ')' '{' bloc_functie '}'
-       | FUNCTION ID '(' param ')' '{' bloc_functie '}'
-       ;
-
-param: type ID ',' param
-     | type
-     ;
-
-var_glob: afirmatie
-        ;
-
-bloc_clasa: bloc_instr
-          ;
-
-bloc_functie: bloc_instr
-            ;
 %%
 void yyerror(const char* s)
 {

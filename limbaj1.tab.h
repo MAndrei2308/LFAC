@@ -57,37 +57,38 @@ extern int yydebug;
     CHARACTER = 263,
     VAL = 264,
     CHAR = 265,
-    FLOAT_VAL = 266,
-    BOOL_VAL = 267,
-    BOOL = 268,
-    CONST = 269,
-    VOID = 270,
-    RETURN = 271,
-    START = 272,
-    END = 273,
-    EVAL = 274,
-    TYPEOF = 275,
-    IF = 276,
-    ELSE = 277,
-    FOR = 278,
-    WHILE = 279,
-    FUNCTION = 280,
-    CLASS = 281,
-    ASSIGN = 282,
-    LT = 283,
-    GT = 284,
-    LE = 285,
-    GE = 286,
-    EQ = 287,
-    NE = 288,
-    ADD = 289,
-    SUB = 290,
-    MUL = 291,
-    DIV = 292,
-    AND = 293,
-    OR = 294,
-    INC = 295,
-    DEC = 296
+    MAIN = 266,
+    FLOAT_VAL = 267,
+    BOOL_VAL = 268,
+    BOOL = 269,
+    CONST = 270,
+    VOID = 271,
+    RETURN = 272,
+    START = 273,
+    END = 274,
+    EVAL = 275,
+    TYPEOF = 276,
+    IF = 277,
+    ELSE = 278,
+    FOR = 279,
+    WHILE = 280,
+    FUNCTION = 281,
+    CLASS = 282,
+    ASSIGN = 283,
+    LT = 284,
+    GT = 285,
+    LE = 286,
+    GE = 287,
+    EQ = 288,
+    NE = 289,
+    ADD = 290,
+    SUB = 291,
+    MUL = 292,
+    DIV = 293,
+    AND = 294,
+    OR = 295,
+    INC = 296,
+    DEC = 297
   };
 #endif
 
@@ -95,14 +96,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 79 "limbaj1.y"
+#line 109 "limbaj1.y"
 
     int intval;       // pentru tokenii care returnează valori întregi
     float floatval;   // pentru tokenii care returnează valori reale
     char* strval;     // pentru tokenii care returnează șiruri de caractere
     char charval;
 
-#line 106 "limbaj1.tab.h"
+#line 107 "limbaj1.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

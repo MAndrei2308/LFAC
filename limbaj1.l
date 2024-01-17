@@ -8,6 +8,7 @@ using namespace std;
 %%
 ([-]?[1-9][0-9]*|0) {return VAL;}
 ([-]?[0]\.[0-9]+|[1-9][0-9]*\.[0-9]+) {return FLOAT_VAL;}
+"main" {return MAIN;}
 "adevarat"|"fals" {return BOOL_VAL;}
 "intreg" {return INT;}
 "real" {return FLOAT;}

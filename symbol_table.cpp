@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cstring>
 #include <iomanip>
+#include <vector>
 using namespace std;
 
 ofstream file("symbol_table.txt");
@@ -25,8 +26,8 @@ void print_table(int count)
 
     int nume_width = 15;
     int info_width = 15;
-    int tip_width = 10;
-    int valoare_width = 10;
+    int tip_width = 15;
+    int valoare_width = 15;
     int locatie_width = 15;
 
     file << "TABELUL DE SIMBOLURI PENTRU VARIABILE\n\n";

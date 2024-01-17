@@ -1,13 +1,14 @@
-intreg z:=10;
-
+intreg h:=11;
 
 intreg main()
 {
     intreg x:=1;
     real f;
+    constanta intreg c:=10;
     intreg a:=3;
     intreg b:=1;
     b:=b+1;
+    c:=b+a;
     a:=x*3+5;
     caracter g:='a';
     bolean ok := adevarat;
