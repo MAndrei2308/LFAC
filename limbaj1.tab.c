@@ -683,7 +683,7 @@ static const char *const yytname[] =
   "IF", "ELSE", "FOR", "WHILE", "FUNCTION", "CLASS", "ASSIGN", "LT", "GT",
   "LE", "GE", "EQ", "NE", "ADD", "SUB", "MUL", "DIV", "AND", "OR", "INC",
   "DEC", "';'", "'{'", "'}'", "'('", "')'", "'['", "']'", "$accept",
-  "program", "main", "$@1", "cfv", "$@2", "bloc_privat", "bloc_public",
+  "program", "main", "$@1", "cfvs", "$@2", "bloc_privat", "bloc_public",
   "functie", "$@3", "$@4", "type_f", "var_glob", "type", "array",
   "bloc_instr", "$@5", "$@6", "if", "while", "for", "arg1", "arg2", "arg3",
   "conditie", "value", "comparatie", "expr", "afirmatie", YY_NULLPTR
@@ -1570,7 +1570,7 @@ yyreduce:
     {
   case 2:
 #line 139 "limbaj1.y"
-                  {if(valid == 1)printf("Programul este corect din punct de vedere sintactic!\n");}
+                   {if(valid == 1)printf("Programul este corect din punct de vedere sintactic!\n");}
 #line 1575 "limbaj1.tab.c"
     break;
 
@@ -1582,7 +1582,7 @@ yyreduce:
 
   case 6:
 #line 146 "limbaj1.y"
-                  {strcpy(locatie,"Global");}
+                   {strcpy(locatie,"Global");}
 #line 1587 "limbaj1.tab.c"
     break;
 
@@ -1594,7 +1594,7 @@ yyreduce:
 
   case 8:
 #line 147 "limbaj1.y"
-                                                                                      {strcpy(locatie,"Global");}
+                                                                                       {strcpy(locatie,"Global");}
 #line 1599 "limbaj1.tab.c"
     break;
 

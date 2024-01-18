@@ -27,6 +27,7 @@ using namespace std;
 "clasa" {return CLASS;}
 "public:" {return PUBLIC;}
 "privat:" {return PRIVAT;}
+"structura" {return STRUCT;}
 "TypeOf" {return TYPEOF;}
 "Eval" {return EVAL;}
 [a-zA-Z][a-zA-Z0-9]* {

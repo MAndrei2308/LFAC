@@ -136,17 +136,23 @@ char* Eval(char* arg)
 
 %%
 
-program: cfv main {if(valid == 1)printf("Programul este corect din punct de vedere sintactic!\n");}
+program: cfvs main {if(valid == 1)printf("Programul este corect din punct de vedere sintactic!\n");}
     ;
 
 main: START {strcpy(locatie,"Global"); strcpy(nume,"main");adaugare('F'); strcpy(locatie,"main");} bloc_instr END
     ;
 
-cfv:  var_glob ';' cfv 
-    | functie cfv {strcpy(locatie,"Global");}
-    | CLASS ID '{' {strcpy(locatie,$2);} PRIVAT bloc_privat PUBLIC bloc_public'}' cfv {strcpy(locatie,"Global");}
+cfvs:  var_glob ';' cfvs 
+    | functie cfvs {strcpy(locatie,"Global");}
+    | CLASS ID '{' {strcpy(locatie,$2);} PRIVAT bloc_privat PUBLIC bloc_public'}' cfvs {strcpy(locatie,"Global");}
+    | STRUCT ID '{' {strcpy(locatie,$2);} bloc_struct'}' cfvs {strcpy(locatie,"Global");}
     |
     ;
+
+bloc_struct: bloc_privat bloc_struct
+           | bloc_public bloc_struct
+           |
+           ;
 
 bloc_privat: type ID ';' bloc_privat { strcpy(nume,$2); strcpy(val,"neinit"); adaugare('V');}
            | type ID ASSIGN value ';' bloc_privat { strcpy(nume,$2); strcpy(val,$4); adaugare('V');}

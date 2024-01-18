@@ -22,3 +22,5 @@ g              Variabila      CHAR           'a'            main
 ok             Variabila      BOOL           adevarat       main           
 v[10]          Variabila      FLOAT          [...]          main           
 bbb            Variabila      STRING         "Denis"        main           
+1              Variabila      INT            1              main           
+xz             Variabila      CONST INT      1001           main           
