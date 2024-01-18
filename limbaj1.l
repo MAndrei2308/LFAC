@@ -8,7 +8,6 @@ using namespace std;
 %%
 ([-]?[1-9][0-9]*|0) {return VAL;}
 ([-]?[0]\.[0-9]+|[1-9][0-9]*\.[0-9]+) {return FLOAT_VAL;}
-"main" {return MAIN;}
 "adevarat"|"fals" {return BOOL_VAL;}
 "intreg" {return INT;}
 "real" {return FLOAT;}
@@ -18,8 +17,8 @@ using namespace std;
 "constanta" {return CONST;}
 "void" {return VOID;}
 "return" {return RETURN;}
-"incepe_program:" {return START;}
-"termina_program" {return END;}
+"incepe_program:{" {return START;}
+"}termina_program" {return END;}
 "daca" {return IF;}
 "altfel" {return ELSE;}
 "pentru" {return FOR;}

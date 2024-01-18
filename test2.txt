@@ -1,20 +1,23 @@
 intreg h:=11;
 
-intreg main()
-{
+incepe_program:{
     intreg x:=1;
     real f;
     constanta intreg c:=10;
     intreg a:=3;
     intreg b:=1;
+    constanta real dd;
     b:=b+1;
     c:=b+a;
     a:=x*3+5;
+    c:=f+b;
     caracter g:='a';
     bolean ok := adevarat;
     real v[10];
     sir bbbb := "Denis";
     TypeOf(a);
+    Eval(c);
+    TypeOf(dd);
     daca(x>a)
     {
         a:=x*3+100;
@@ -31,4 +34,4 @@ intreg main()
     {
         x:=a*3+100;
     }
-}
+}termina_program

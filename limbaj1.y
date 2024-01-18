@@ -93,14 +93,20 @@ char* TypeOf(char* arg)
     return nullptr;
 }
 
-void Eval(char* arg)
+char* Eval(char* arg)
 {
+    int OK = 0;
     for(int i=0;i<count;i++)
     {
         if(strcmp(symbol_table[i].nume,arg)==0)
         {
+            // printf("%s\n",symbol_table[i].tip);
+            // OK = 1;
+            return symbol_table[i].valoare;
         }
     }
+    //if(OK == 0)printf("%s was not declared\n", arg);
+    return nullptr;
 }
 
 %}
@@ -133,7 +139,7 @@ void Eval(char* arg)
 program: cfv main {if(valid == 1)printf("Programul este corect din punct de vedere sintactic!\n");}
     ;
 
-main: type MAIN '(' ')' '{' bloc_instr '}' {strcpy(locatie,"Global"); strcpy(nume,"main");adaugare('F');}
+main: START bloc_instr END {strcpy(locatie,"Global"); strcpy(nume,"main");adaugare('F');}
     ;
 
 cfv:  var_glob ';'
@@ -170,10 +176,10 @@ bloc_instr: if
           | while bloc_instr
           | for bloc_instr
           | afirmatie ';' bloc_instr
-          | TYPEOF '(' ID ')' ';' { TypeOf($3);}
-          | EVAL '(' ID ')' ';' { Eval($3);}
-          | TYPEOF '(' ID ')' ';' { TypeOf($3);} bloc_instr
-          | EVAL '(' ID ')' ';' { Eval($3);} bloc_instr
+          | TYPEOF '(' ID ')' ';' { if(valid == 1) printf("TypeOf(%s): %s\n",$3,TypeOf($3));}
+          | EVAL '(' ID ')' ';' { if(valid == 1) printf("Eval(%s): %s\n",$3,Eval($3));}
+          | TYPEOF '(' ID ')' ';' { if(valid == 1) printf("TypeOf(%s): %s\n",$3,TypeOf($3));} bloc_instr
+          | EVAL '(' ID ')' ';' { if(valid == 1) printf("Eval(%s): %s\n",$3,Eval($3));} bloc_instr
           ;
 
 if: IF '(' conditie ')' '{' bloc_instr '}'
@@ -185,7 +191,11 @@ while: WHILE '(' conditie ')' '{' bloc_instr '}';
 for: FOR '(' arg1 ';' arg2 ';' arg3 ')' '{' bloc_instr '}';
 
 arg1: type ID ASSIGN value 
-    {   if (declarare_multipla($2, count) == true)printf("Declarare multipla\n"); 
+    {   if (declarare_multipla($2, count) == true)
+        {
+            printf("Declarare multipla\n"); 
+            valid=0;
+        }
         else 
         {
             strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');
@@ -324,48 +334,80 @@ expr: value
 
 afirmatie: type ID ASSIGN value
             {
-            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n"); 
+            if (declarare_multipla($2, count) == true)
+        {
+            printf("Declarare multipla\n"); 
+            valid=0;
+        } 
              else 
                 {
                     strcpy(nume,$2);strcpy(locatie,"Local"); adaugare('V');
                 }
             }
          | CHAR ID ASSIGN CHARACTER {
-            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n");
+            if (declarare_multipla($2, count) == true)
+        {
+            printf("Declarare multipla\n"); 
+            valid=0;
+        }
             else
             { strcpy(tip,"CHAR"); strcpy(nume, $2); strcpy(val,yytext); strcpy(locatie,"Local"); adaugare('V');}
          }
          | STR ID ASSIGN STRING {
-            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n");
+            if (declarare_multipla($2, count) == true)
+        {
+            printf("Declarare multipla\n"); 
+            valid=0;
+        }
             else
             { strcpy(tip,"STRING"); strcpy(nume, $2); strcpy(val,yytext); strcpy(locatie,"Local"); adaugare('V');}
          }
          | type ID 
          {
-            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n"); 
+            if (declarare_multipla($2, count) == true)
+        {
+            printf("Declarare multipla\n"); 
+            valid=0;
+        }
              else 
                 {
                     {strcpy(val, "neinit"); }strcpy(nume,$2);strcpy(locatie,"Local"); adaugare('V');
                 }
             }
          | CHAR ID {
-            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n");
+            if (declarare_multipla($2, count) == true)
+        {
+            printf("Declarare multipla\n"); 
+            valid=0;
+        }
             else
             { strcpy(tip,"CHAR");  strcpy(val, "neinit"); strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');}
             }
          | STR ID {
-            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n");
+            if (declarare_multipla($2, count) == true)
+        {
+            printf("Declarare multipla\n"); 
+            valid=0;
+        }
             else
             { strcpy(tip,"STRING");  strcpy(val, "neinit"); strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');}
          }
          | BOOL ID ASSIGN BOOL_VAL{
-            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n");
+            if (declarare_multipla($2, count) == true)
+        {
+            printf("Declarare multipla\n"); 
+            valid=0;
+        }
             else{
                 strcpy(tip,"BOOL");  strcpy(val,yytext); strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');
             }
          }
          | BOOL ID {
-            if (declarare_multipla($2, count) == true)printf("Declarare multipla\n");
+            if (declarare_multipla($2, count) == true)
+        {
+            printf("Declarare multipla\n"); 
+            valid=0;
+        }
             else{
                 strcpy(tip,"BOOL");  strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');
             }

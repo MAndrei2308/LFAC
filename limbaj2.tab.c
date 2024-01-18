@@ -66,7 +66,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "limbaj1.y"
+#line 1 "limbaj2.y"
 
 #include <iostream>
 #include <vector>
@@ -83,103 +83,8 @@ extern int yylineno;
 void yyerror(const char* s);
 extern int yylex();
 
-int count=0;
-int valid = 1;
 
-char nume[40];
-char tip[40];
-char val[40];
-char locatie[40];
-void adaugare(char c)
-{
-    if(c=='V')
-    {
-        symbol_table[count].nume=strdup(nume);
-        symbol_table[count].info=strdup("Variabila");
-        symbol_table[count].tip=strdup(tip);
-        symbol_table[count].valoare=strdup(val);
-        symbol_table[count].locatie=strdup(locatie);
-        count++;
-    }
-    else if(c=='F')
-    {
-        symbol_table[count].nume=strdup(nume);
-        symbol_table[count].info=strdup("Functie");
-        symbol_table[count].tip=strdup(tip);
-        symbol_table[count].valoare=strdup("-");
-        symbol_table[count].locatie=strdup(locatie);
-        count++;
-    }
-}
-
-// struct arrayInfo {
-//         char type[15];
-//         int size;
-//         char name[20];
-//         vector <int> values;
-//     } arraytype;
-
-// void adaugare_sir(char* name, int size)
-// {
-//     arrayInfo array;
-//     strcpy(array.name,name);
-//     strcpy(array.type,"int");
-//     array.size=size;
-//     array.values.resize(size);
-//     arraytype.push_back(array);
-// }
-
-// int getArrayElement(char* name, int index)
-// {
-//     for(auto& array : arraytype)
-//         if (strcmp(array.name, name) == 0)
-//             return array.values[index];
-//     return -1;
-// }
-
-// void setArrayElement(char* name, int index, int value)
-// {
-//     for (auto& array: arraytype)
-//         if (strcmp(array.name, name) == 0)
-//             array.values[index] = value;
-//             return;
-// }
-
-
-char* TypeOf(char* arg)
-{
-    int OK = 0;
-    for(int i=0;i<count;i++)
-    {
-        if(strcmp(symbol_table[i].nume,arg)==0)
-        {
-            // printf("%s\n",symbol_table[i].tip);
-            // OK = 1;
-            return symbol_table[i].tip;
-        }
-    }
-    //if(OK == 0)printf("%s was not declared\n", arg);
-    return nullptr;
-}
-
-char* Eval(char* arg)
-{
-    int OK = 0;
-    for(int i=0;i<count;i++)
-    {
-        if(strcmp(symbol_table[i].nume,arg)==0)
-        {
-            // printf("%s\n",symbol_table[i].tip);
-            // OK = 1;
-            return symbol_table[i].valoare;
-        }
-    }
-    //if(OK == 0)printf("%s was not declared\n", arg);
-    return nullptr;
-}
-
-
-#line 183 "limbaj1.tab.c"
+#line 88 "limbaj2.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -212,8 +117,8 @@ char* Eval(char* arg)
 
 /* Use api.header.include to #include this header
    instead of duplicating it here.  */
-#ifndef YY_YY_LIMBAJ1_TAB_H_INCLUDED
-# define YY_YY_LIMBAJ1_TAB_H_INCLUDED
+#ifndef YY_YY_LIMBAJ2_TAB_H_INCLUDED
+# define YY_YY_LIMBAJ2_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -227,19 +132,19 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    ID = 258,
-    INT = 259,
-    FLOAT = 260,
-    STR = 261,
-    STRING = 262,
-    CHARACTER = 263,
-    VAL = 264,
-    CHAR = 265,
-    MAIN = 266,
-    FLOAT_VAL = 267,
-    BOOL_VAL = 268,
-    BOOL = 269,
-    CONST = 270,
+    MAIN = 258,
+    FLOAT_VAL = 259,
+    BOOL_VAL = 260,
+    BOOL = 261,
+    CONST = 262,
+    ID = 263,
+    INT = 264,
+    FLOAT = 265,
+    STR = 266,
+    STRING = 267,
+    CHARACTER = 268,
+    VAL = 269,
+    CHAR = 270,
     VOID = 271,
     RETURN = 272,
     START = 273,
@@ -272,19 +177,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
-{
-#line 115 "limbaj1.y"
-
-    int intval;       // pentru tokenii care returnează valori întregi
-    float floatval;   // pentru tokenii care returnează valori reale
-    char* strval;     // pentru tokenii care returnează șiruri de caractere
-    char charval;
-
-#line 285 "limbaj1.tab.c"
-
-};
-typedef union YYSTYPE YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -294,7 +187,7 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_LIMBAJ1_TAB_H_INCLUDED  */
+#endif /* !YY_YY_LIMBAJ2_TAB_H_INCLUDED  */
 
 
 
@@ -395,7 +288,7 @@ typedef int yytype_uint16;
 #define YYSIZEOF(X) YY_CAST (YYPTRDIFF_T, sizeof (X))
 
 /* Stored state numbers (used for stacks). */
-typedef yytype_uint8 yy_state_t;
+typedef yytype_int8 yy_state_t;
 
 /* State numbers in computations.  */
 typedef int yy_state_fast_t;
@@ -598,18 +491,18 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  10
+#define YYFINAL  6
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   147
+#define YYLAST   5
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  50
+#define YYNTOKENS  45
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  21
+#define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  62
+#define YYNRULES  5
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  133
+#define YYNSTATES  10
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   297
@@ -628,15 +521,15 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-      46,    47,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    43,
+      43,    44,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,    44,     2,    45,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,    48,     2,    49,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -658,15 +551,9 @@ static const yytype_int8 yytranslate[] =
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_int16 yyrline[] =
+static const yytype_int8 yyrline[] =
 {
-       0,   139,   139,   142,   145,   149,   152,   153,   154,   155,
-     158,   171,   172,   173,   174,   175,   176,   177,   178,   179,
-     180,   181,   181,   182,   182,   185,   186,   189,   191,   193,
-     204,   207,   209,   210,   211,   212,   215,   218,   219,   220,
-     224,   225,   226,   227,   228,   229,   232,   233,   258,   283,
-     308,   335,   347,   356,   365,   377,   386,   395,   405,   415,
-     416,   417,   418
+       0,    34,    34,    37,    40,    41
 };
 #endif
 
@@ -675,15 +562,12 @@ static const yytype_int16 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "ID", "INT", "FLOAT", "STR", "STRING",
-  "CHARACTER", "VAL", "CHAR", "MAIN", "FLOAT_VAL", "BOOL_VAL", "BOOL",
-  "CONST", "VOID", "RETURN", "START", "END", "EVAL", "TYPEOF", "IF",
-  "ELSE", "FOR", "WHILE", "FUNCTION", "CLASS", "ASSIGN", "LT", "GT", "LE",
-  "GE", "EQ", "NE", "ADD", "SUB", "MUL", "DIV", "AND", "OR", "INC", "DEC",
-  "';'", "'['", "']'", "'('", "')'", "'{'", "'}'", "$accept", "program",
-  "main", "cfv", "var_glob", "type", "array", "bloc_instr", "$@1", "$@2",
-  "if", "while", "for", "arg1", "arg2", "arg3", "conditie", "value",
-  "comparatie", "expr", "afirmatie", YY_NULLPTR
+  "$end", "error", "$undefined", "MAIN", "FLOAT_VAL", "BOOL_VAL", "BOOL",
+  "CONST", "ID", "INT", "FLOAT", "STR", "STRING", "CHARACTER", "VAL",
+  "CHAR", "VOID", "RETURN", "START", "END", "EVAL", "TYPEOF", "IF", "ELSE",
+  "FOR", "WHILE", "FUNCTION", "CLASS", "ASSIGN", "LT", "GT", "LE", "GE",
+  "EQ", "NE", "ADD", "SUB", "MUL", "DIV", "AND", "OR", "INC", "DEC", "'('",
+  "')'", "$accept", "program", "main", "type", YY_NULLPTR
 };
 #endif
 
@@ -696,16 +580,16 @@ static const yytype_int16 yytoknum[] =
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
      275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
      285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
-     295,   296,   297,    59,    91,    93,    40,    41,   123,   125
+     295,   296,   297,    40,    41
 };
 # endif
 
-#define YYPACT_NINF (-47)
+#define YYPACT_NINF (-40)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
 
-#define YYTABLE_NINF (-21)
+#define YYTABLE_NINF (-1)
 
 #define yytable_value_is_error(Yyn) \
   0
@@ -714,20 +598,7 @@ static const yytype_int16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      20,   -47,   -47,     6,    47,     2,    17,    49,   -47,   -47,
-     -47,    12,   -47,   -47,    35,    37,    69,    70,    72,    46,
-      48,    50,    51,    54,    78,    90,    92,   -47,    82,    12,
-      12,    12,   -47,    59,    71,    71,   -47,   -47,   -47,   -47,
-     -47,   -47,   -47,   -47,    71,    75,    76,    77,   103,   104,
-      71,    25,    71,   -47,   -47,   -21,   -47,   -47,   -47,   -47,
-      12,   -47,   -47,   -47,   -47,   -47,    21,    21,   101,   102,
-      96,    64,    65,    66,    57,    86,   112,    73,    74,    71,
-     108,   -47,    71,    71,    71,    71,   -47,   -47,   -47,    79,
-      80,    81,    71,    71,    91,    71,    83,   -47,    85,   -24,
-     -24,   -47,   -47,   -11,   -10,    12,   -47,   -47,    71,    84,
-     -47,    12,   -47,    12,    12,    87,   -47,     9,    88,   -47,
-     -47,    95,     0,    93,   -47,    94,    97,    12,    12,    89,
-      98,   -47,   -47
+      -9,   -40,   -40,     2,   -40,     0,   -40,   -39,   -39,   -40
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -735,121 +606,51 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     6,     7,     0,     0,     0,     0,     0,     8,     9,
-       1,     0,     2,     4,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    59,     0,    11,
-      12,    13,    62,     0,     0,     0,    40,    41,    42,    43,
-      44,    45,    32,    33,     0,    56,    55,    58,     0,     0,
-       0,     0,     0,    34,    35,    54,     3,    15,    16,    17,
-      14,    39,    37,    38,     5,    46,    60,    61,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,    18,     0,     0,     0,     0,    53,    52,    57,     0,
-       0,     0,     0,     0,     0,     0,     0,    51,     0,    47,
-      48,    49,    50,    23,    21,     0,    36,    30,     0,     0,
-      31,     0,    10,     0,     0,     0,    29,     0,     0,    24,
-      22,    25,     0,     0,    27,     0,     0,     0,     0,     0,
-       0,    26,    28
+       0,     4,     5,     0,     2,     0,     1,     0,     0,     3
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -47,   -47,   -47,   -47,   -47,     4,   -47,   -29,   -47,   -47,
-     -47,   -47,   -47,   -47,   -47,     3,   -46,   -31,    52,   -39,
-     -47
+     -40,   -40,   -40,   -40
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     4,    12,     5,     6,    26,    27,    28,   114,   113,
-      29,    30,    31,    77,   109,    32,    73,    65,    44,    66,
-      33
+      -1,     3,     4,     5
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
      positive, shift that token.  If negative, reduce the rule whose
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
-static const yytype_int16 yytable[] =
+static const yytype_int8 yytable[] =
 {
-      57,    58,    59,    64,     7,    67,    78,    79,   -20,   -19,
-       8,     9,   122,    84,    85,    15,     1,     2,    16,    74,
-      11,    74,    17,    80,     1,     2,    18,     3,    75,     1,
-       2,    81,    19,    20,    21,     3,    22,    23,   -20,   -19,
-       3,    42,    43,    99,   100,   101,   102,    10,    97,   110,
-      24,    25,    14,    24,    25,    76,    82,    83,    84,    85,
-      13,   106,   107,    34,    74,    35,    36,    37,    38,    39,
-      40,    41,    45,    46,    61,    47,   115,   116,    42,    43,
-      62,    53,   118,    63,   119,   120,    36,    37,    38,    39,
-      40,    41,    48,    54,    49,    55,    50,    51,   129,   130,
-      52,    56,    60,    68,    69,    70,    71,    72,    86,    88,
-      87,    89,    90,    91,    93,    94,    95,    98,   125,   108,
-     123,    96,   103,   104,     0,     0,    92,   117,     0,   105,
-     112,   111,     0,     0,     0,     0,   121,   124,   131,     0,
-     126,     0,   127,     0,     0,   128,     0,   132
+       1,     2,     6,     7,     8,     9
 };
 
-static const yytype_int16 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-      29,    30,    31,    34,     0,    44,    52,    28,    19,    19,
-       4,     5,     3,    37,    38,     3,     4,     5,     6,    50,
-      18,    52,    10,    44,     4,     5,    14,    15,     3,     4,
-       5,    60,    20,    21,    22,    15,    24,    25,    49,    49,
-      15,    41,    42,    82,    83,    84,    85,     0,    79,    95,
-      41,    42,     3,    41,    42,    51,    35,    36,    37,    38,
-      43,    92,    93,    28,    95,    28,    29,    30,    31,    32,
-      33,    34,     3,     3,     3,     3,   105,   108,    41,    42,
-       9,     3,   111,    12,   113,   114,    29,    30,    31,    32,
-      33,    34,    46,     3,    46,     3,    46,    46,   127,   128,
-      46,    19,    43,    28,    28,    28,     3,     3,     7,    13,
-       8,    47,    47,    47,    28,     3,    43,     9,    23,    28,
-     117,    47,    43,    43,    -1,    -1,    74,    43,    -1,    48,
-      45,    48,    -1,    -1,    -1,    -1,    49,    49,    49,    -1,
-      47,    -1,    48,    -1,    -1,    48,    -1,    49
+       9,    10,     0,     3,    43,    44
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     4,     5,    15,    51,    53,    54,    55,     4,     5,
-       0,    18,    52,    43,     3,     3,     6,    10,    14,    20,
-      21,    22,    24,    25,    41,    42,    55,    56,    57,    60,
-      61,    62,    65,    70,    28,    28,    29,    30,    31,    32,
-      33,    34,    41,    42,    68,     3,     3,     3,    46,    46,
-      46,    46,    46,     3,     3,     3,    19,    57,    57,    57,
-      43,     3,     9,    12,    67,    67,    69,    69,    28,    28,
-      28,     3,     3,    66,    67,     3,    55,    63,    66,    28,
-      44,    57,    35,    36,    37,    38,     7,     8,    13,    47,
-      47,    47,    68,    28,     3,    43,    47,    67,     9,    69,
-      69,    69,    69,    43,    43,    48,    67,    67,    28,    64,
-      66,    48,    45,    59,    58,    57,    67,    43,    57,    57,
-      57,    49,     3,    65,    49,    23,    47,    48,    48,    57,
-      57,    49,    49
+       0,     9,    10,    46,    47,    48,     0,     3,    43,    44
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    50,    51,    52,    53,    54,    55,    55,    55,    55,
-      56,    57,    57,    57,    57,    57,    57,    57,    57,    57,
-      57,    58,    57,    59,    57,    60,    60,    61,    62,    63,
-      63,    64,    65,    65,    65,    65,    66,    67,    67,    67,
-      68,    68,    68,    68,    68,    68,    69,    69,    69,    69,
-      69,    70,    70,    70,    70,    70,    70,    70,    70,    70,
-      70,    70,    70
+       0,    45,    46,    47,    48,    48
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     2,     3,     2,     4,     1,     1,     2,     2,
-       5,     1,     1,     1,     2,     2,     2,     2,     3,     5,
-       5,     0,     7,     0,     7,     7,    11,     7,    11,     4,
-       3,     1,     2,     2,     2,     2,     3,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     3,     3,     3,
-       3,     4,     4,     4,     2,     2,     2,     4,     2,     1,
-       3,     3,     1
+       0,     2,     1,     4,     1,     1
 };
 
 
@@ -1545,357 +1346,19 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 139 "limbaj1.y"
-                  {if(valid == 1)printf("Programul este corect din punct de vedere sintactic!\n");}
-#line 1551 "limbaj1.tab.c"
+#line 34 "limbaj2.y"
+              {printf("Programul este corect din punct de vedere sintactic!\n");}
+#line 1352 "limbaj2.tab.c"
     break;
 
   case 3:
-#line 142 "limbaj1.y"
-                           {strcpy(locatie,"Global"); strcpy(nume,"main");adaugare('F');}
-#line 1557 "limbaj1.tab.c"
-    break;
-
-  case 5:
-#line 149 "limbaj1.y"
-                               {strcpy(val,yytext);strcpy(locatie,"Global"); strcpy(nume,(yyvsp[-2].strval));adaugare('V');}
-#line 1563 "limbaj1.tab.c"
-    break;
-
-  case 6:
-#line 152 "limbaj1.y"
-          { strcpy(tip,"INT");}
-#line 1569 "limbaj1.tab.c"
-    break;
-
-  case 7:
-#line 153 "limbaj1.y"
-            { strcpy(tip,"FLOAT");}
-#line 1575 "limbaj1.tab.c"
-    break;
-
-  case 8:
-#line 154 "limbaj1.y"
-                { strcpy(tip,"CONST INT");}
-#line 1581 "limbaj1.tab.c"
-    break;
-
-  case 9:
-#line 155 "limbaj1.y"
-                  { strcpy(tip,"CONST INT");}
-#line 1587 "limbaj1.tab.c"
-    break;
-
-  case 10:
-#line 158 "limbaj1.y"
-                           {
-            //  if (declarare_multipla($2, count) == true)printf("Declarare multipla\n"); 
-            //  else 
-            //     {
-                    // arraytype.size=atoi(yytext);
-                    strcpy(nume,yytext-4);
-                    // adaugare_sir(nume, arraytype.size);
-                    strcpy(locatie,"Local"); 
-                    strcpy(val,"[...]");
-                    adaugare('V');
-            //     }
-            }
-#line 1604 "limbaj1.tab.c"
-    break;
-
-  case 19:
-#line 179 "limbaj1.y"
-                                  { if(valid == 1) printf("TypeOf(%s): %s\n",(yyvsp[-2].strval),TypeOf((yyvsp[-2].strval)));}
-#line 1610 "limbaj1.tab.c"
-    break;
-
-  case 20:
-#line 180 "limbaj1.y"
-                                { if(valid == 1) printf("Eval(%s): %s\n",(yyvsp[-2].strval),Eval((yyvsp[-2].strval)));}
-#line 1616 "limbaj1.tab.c"
-    break;
-
-  case 21:
-#line 181 "limbaj1.y"
-                                  { if(valid == 1) printf("TypeOf(%s): %s\n",(yyvsp[-2].strval),TypeOf((yyvsp[-2].strval)));}
-#line 1622 "limbaj1.tab.c"
-    break;
-
-  case 23:
-#line 182 "limbaj1.y"
-                                { if(valid == 1) printf("Eval(%s): %s\n",(yyvsp[-2].strval),Eval((yyvsp[-2].strval)));}
-#line 1628 "limbaj1.tab.c"
-    break;
-
-  case 29:
-#line 194 "limbaj1.y"
-    {   if (declarare_multipla((yyvsp[-2].strval), count) == true)
-        {
-            printf("Declarare multipla\n"); 
-            valid=0;
-        }
-        else 
-        {
-            strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');
-        }
-        }
-#line 1643 "limbaj1.tab.c"
-    break;
-
-  case 37:
-#line 218 "limbaj1.y"
-           {strcpy(val,yytext);}
-#line 1649 "limbaj1.tab.c"
-    break;
-
-  case 38:
-#line 219 "limbaj1.y"
-                 {strcpy(val,yytext);}
-#line 1655 "limbaj1.tab.c"
-    break;
-
-  case 39:
-#line 220 "limbaj1.y"
-          {strcpy(val, yytext); }
-#line 1661 "limbaj1.tab.c"
-    break;
-
-  case 47:
-#line 234 "limbaj1.y"
-    { 
-    char* a = get_value((yyvsp[-2].strval), count);
-    char* b = get_value((yyvsp[0].strval), count);
-    char* a_type;
-    char* b_type;
-    a_type = TypeOf((yyvsp[-2].strval));
-    b_type = TypeOf((yyvsp[0].strval));
-    if (strcmp(a_type, b_type) == 0)
-        {
-            int val_a = atoi(a);
-            int val_b = atoi(b);
-            int sum = val_a + val_b;
-            char temp[40]; 
-            sprintf(temp, "%d", sum);
-            strcpy(val, temp);
-            value_returned((yyvsp[-2].strval), count, val);
-            // cout << "p: " << a << " " << a << endl;
-            // cout << "\ntest: " << val << "\n";
-        }
-    else {
-        printf("Adunarea intre doua tipuri diferite nu este permisa!\n");
-        valid = 0;
-        }
-    }
-#line 1690 "limbaj1.tab.c"
-    break;
-
-  case 48:
-#line 259 "limbaj1.y"
-    { 
-    char* a = get_value((yyvsp[-2].strval), count);
-    char* b = get_value((yyvsp[0].strval), count);
-    char* a_type;
-    char* b_type;
-    a_type = TypeOf((yyvsp[-2].strval));
-    b_type = TypeOf((yyvsp[0].strval));
-    if (strcmp(a_type, b_type) == 0)
-        {
-            int val_a = atoi(a);
-            int val_b = atoi(b);
-            int sum = val_a - val_b;
-            char temp[40]; 
-            sprintf(temp, "%d", sum);
-            strcpy(val, temp);
-            value_returned((yyvsp[-2].strval), count, val);
-            // cout << "p: " << a << " " << a << endl;
-            // cout << "\ntest: " << val << "\n";
-        }
-    else {
-        printf("Scaderea intre doua tipuri diferite nu este permisa!\n");
-        valid = 0;
-        }
-    }
-#line 1719 "limbaj1.tab.c"
-    break;
-
-  case 49:
-#line 284 "limbaj1.y"
-    { 
-    char* a = get_value((yyvsp[-2].strval), count);
-    char* b = get_value((yyvsp[0].strval), count);
-    char* a_type;
-    char* b_type;
-    a_type = TypeOf((yyvsp[-2].strval));
-    b_type = TypeOf((yyvsp[0].strval));
-    if (strcmp(a_type, b_type) == 0)
-        {
-            int val_a = atoi(a);
-            int val_b = atoi(b);
-            int sum = val_a * val_b;
-            char temp[40]; 
-            sprintf(temp, "%d", sum);
-            strcpy(val, temp);
-            value_returned((yyvsp[-2].strval), count, val);
-            // cout << "p: " << a << " " << a << endl;
-            // cout << "\ntest: " << val << "\n";
-        }
-    else {
-        printf("Inmultirea intre doua tipuri diferite nu este permisa!\n");
-        valid = 0;
-        }
-    }
-#line 1748 "limbaj1.tab.c"
-    break;
-
-  case 50:
-#line 309 "limbaj1.y"
-    { 
-    char* a = get_value((yyvsp[-2].strval), count);
-    char* b = get_value((yyvsp[0].strval), count);
-    char* a_type;
-    char* b_type;
-    a_type = TypeOf((yyvsp[-2].strval));
-    b_type = TypeOf((yyvsp[0].strval));
-    if (strcmp(a_type, b_type) == 0)
-        {
-            int val_a = atoi(a);
-            int val_b = atoi(b);
-            int sum = val_a / val_b;
-            char temp[40]; 
-            sprintf(temp, "%d", sum);
-            strcpy(val, temp);
-            value_returned((yyvsp[-2].strval), count, val);
-            // cout << "p: " << a << " " << a << endl;
-            // cout << "\ntest: " << val << "\n";
-        }
-    else {
-        printf("Impartirea intre doua tipuri diferite nu este permisa!\n");
-        valid = 0;
-        }
-    }
-#line 1777 "limbaj1.tab.c"
-    break;
-
-  case 51:
-#line 336 "limbaj1.y"
-            {
-            if (declarare_multipla((yyvsp[-2].strval), count) == true)
-        {
-            printf("Declarare multipla\n"); 
-            valid=0;
-        } 
-             else 
-                {
-                    strcpy(nume,(yyvsp[-2].strval));strcpy(locatie,"Local"); adaugare('V');
-                }
-            }
-#line 1793 "limbaj1.tab.c"
-    break;
-
-  case 52:
-#line 347 "limbaj1.y"
-                                    {
-            if (declarare_multipla((yyvsp[-2].strval), count) == true)
-        {
-            printf("Declarare multipla\n"); 
-            valid=0;
-        }
-            else
-            { strcpy(tip,"CHAR"); strcpy(nume, (yyvsp[-2].strval)); strcpy(val,yytext); strcpy(locatie,"Local"); adaugare('V');}
-         }
-#line 1807 "limbaj1.tab.c"
-    break;
-
-  case 53:
-#line 356 "limbaj1.y"
-                                {
-            if (declarare_multipla((yyvsp[-2].strval), count) == true)
-        {
-            printf("Declarare multipla\n"); 
-            valid=0;
-        }
-            else
-            { strcpy(tip,"STRING"); strcpy(nume, (yyvsp[-2].strval)); strcpy(val,yytext); strcpy(locatie,"Local"); adaugare('V');}
-         }
-#line 1821 "limbaj1.tab.c"
-    break;
-
-  case 54:
-#line 366 "limbaj1.y"
-         {
-            if (declarare_multipla((yyvsp[0].strval), count) == true)
-        {
-            printf("Declarare multipla\n"); 
-            valid=0;
-        }
-             else 
-                {
-                    {strcpy(val, "neinit"); }strcpy(nume,(yyvsp[0].strval));strcpy(locatie,"Local"); adaugare('V');
-                }
-            }
-#line 1837 "limbaj1.tab.c"
-    break;
-
-  case 55:
-#line 377 "limbaj1.y"
-                   {
-            if (declarare_multipla((yyvsp[0].strval), count) == true)
-        {
-            printf("Declarare multipla\n"); 
-            valid=0;
-        }
-            else
-            { strcpy(tip,"CHAR");  strcpy(val, "neinit"); strcpy(nume, (yyvsp[0].strval)); strcpy(locatie,"Local"); adaugare('V');}
-            }
-#line 1851 "limbaj1.tab.c"
-    break;
-
-  case 56:
-#line 386 "limbaj1.y"
-                  {
-            if (declarare_multipla((yyvsp[0].strval), count) == true)
-        {
-            printf("Declarare multipla\n"); 
-            valid=0;
-        }
-            else
-            { strcpy(tip,"STRING");  strcpy(val, "neinit"); strcpy(nume, (yyvsp[0].strval)); strcpy(locatie,"Local"); adaugare('V');}
-         }
-#line 1865 "limbaj1.tab.c"
-    break;
-
-  case 57:
-#line 395 "limbaj1.y"
-                                  {
-            if (declarare_multipla((yyvsp[-2].strval), count) == true)
-        {
-            printf("Declarare multipla\n"); 
-            valid=0;
-        }
-            else{
-                strcpy(tip,"BOOL");  strcpy(val,yytext); strcpy(nume, (yyvsp[-2].strval)); strcpy(locatie,"Local"); adaugare('V');
-            }
-         }
-#line 1880 "limbaj1.tab.c"
-    break;
-
-  case 58:
-#line 405 "limbaj1.y"
-                   {
-            if (declarare_multipla((yyvsp[0].strval), count) == true)
-        {
-            printf("Declarare multipla\n"); 
-            valid=0;
-        }
-            else{
-                strcpy(tip,"BOOL");  strcpy(nume, (yyvsp[0].strval)); strcpy(locatie,"Local"); adaugare('V');
-            }
-         }
-#line 1895 "limbaj1.tab.c"
+#line 37 "limbaj2.y"
+                        { bloc_instr }
+#line 1358 "limbaj2.tab.c"
     break;
 
 
-#line 1899 "limbaj1.tab.c"
+#line 1362 "limbaj2.tab.c"
 
       default: break;
     }
@@ -2126,17 +1589,4 @@ yyreturn:
     YYSTACK_FREE (yymsg);
 #endif
   return yyresult;
-}
-#line 421 "limbaj1.y"
-
-void yyerror(const char* s)
-{
-     printf("Eroare: %s la linia:%d\n",s,yylineno);
-}
-
-int main(int argc, char** argv)
-{
-    yyin=fopen(argv[1],"r");
-    yyparse();
-    print_table(count);
 }

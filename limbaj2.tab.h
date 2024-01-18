@@ -34,8 +34,8 @@
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
-#ifndef YY_YY_LIMBAJ1_TAB_H_INCLUDED
-# define YY_YY_LIMBAJ1_TAB_H_INCLUDED
+#ifndef YY_YY_LIMBAJ2_TAB_H_INCLUDED
+# define YY_YY_LIMBAJ2_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -49,19 +49,19 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    ID = 258,
-    INT = 259,
-    FLOAT = 260,
-    STR = 261,
-    STRING = 262,
-    CHARACTER = 263,
-    VAL = 264,
-    CHAR = 265,
-    MAIN = 266,
-    FLOAT_VAL = 267,
-    BOOL_VAL = 268,
-    BOOL = 269,
-    CONST = 270,
+    MAIN = 258,
+    FLOAT_VAL = 259,
+    BOOL_VAL = 260,
+    BOOL = 261,
+    CONST = 262,
+    ID = 263,
+    INT = 264,
+    FLOAT = 265,
+    STR = 266,
+    STRING = 267,
+    CHARACTER = 268,
+    VAL = 269,
+    CHAR = 270,
     VOID = 271,
     RETURN = 272,
     START = 273,
@@ -94,19 +94,7 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-union YYSTYPE
-{
-#line 115 "limbaj1.y"
-
-    int intval;       // pentru tokenii care returnează valori întregi
-    float floatval;   // pentru tokenii care returnează valori reale
-    char* strval;     // pentru tokenii care returnează șiruri de caractere
-    char charval;
-
-#line 107 "limbaj1.tab.h"
-
-};
-typedef union YYSTYPE YYSTYPE;
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -116,4 +104,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_LIMBAJ1_TAB_H_INCLUDED  */
+#endif /* !YY_YY_LIMBAJ2_TAB_H_INCLUDED  */

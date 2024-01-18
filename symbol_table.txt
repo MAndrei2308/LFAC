@@ -8,6 +8,7 @@ f              Variabila      FLOAT          neinit         Local
 c              Variabila      CONST INT      10             Local          
 a              Variabila      INT            648            Local          
 b              Variabila      INT            5              Local          
+dd             Variabila      CONST INT      neinit         Local          
 g              Variabila      CHAR           'a'            Local          
 ok             Variabila      BOOL           adevarat       Local          
 v[10]          Variabila      FLOAT          [...]          Local          
