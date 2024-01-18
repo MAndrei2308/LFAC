@@ -121,7 +121,7 @@ char* Eval(char* arg)
 
 %token <strval> ID INT FLOAT STR STRING CHARACTER VAL
 %token <charval> CHAR
-%token MAIN FLOAT_VAL BOOL_VAL BOOL CONST VOID RETURN START END EVAL TYPEOF IF ELSE FOR WHILE FUNCTION CLASS ASSIGN LT GT LE GE EQ NE ADD SUB MUL DIV AND OR INC DEC
+%token PUBLIC PRIVAT FLOAT_VAL BOOL_VAL BOOL CONST VOID RETURN START END EVAL TYPEOF IF ELSE FOR WHILE FUNCTION CLASS ASSIGN LT GT LE GE EQ NE ADD SUB MUL DIV AND OR INC DEC
 %type <strval> expr value
 
 %left ASSIGN
@@ -139,12 +139,32 @@ char* Eval(char* arg)
 program: cfv main {if(valid == 1)printf("Programul este corect din punct de vedere sintactic!\n");}
     ;
 
-main: START bloc_instr END {strcpy(locatie,"Global"); strcpy(nume,"main");adaugare('F');}
+main: START {strcpy(locatie,"Global"); strcpy(nume,"main");adaugare('F'); strcpy(locatie,"main");} bloc_instr END
     ;
 
-cfv:  var_glob ';'
-    
+cfv:  var_glob ';' cfv 
+    | functie cfv {strcpy(locatie,"Global");}
+    | CLASS ID '{' {strcpy(locatie,$2);} PRIVAT bloc_privat PUBLIC bloc_public'}' cfv {strcpy(locatie,"Global");}
+    |
     ;
+
+bloc_privat: type ID ';' bloc_privat { strcpy(nume,$2); strcpy(val,"neinit"); adaugare('V');}
+           | type ID ASSIGN value ';' bloc_privat { strcpy(nume,$2); strcpy(val,$4); adaugare('V');}
+           |
+           ;
+
+bloc_public: functie bloc_public
+          |
+          ;
+
+functie: FUNCTION type_f ID '(' ')' ';' { strcpy(nume,$3);adaugare('F');}
+       | FUNCTION type_f ID '(' ')' { strcpy(nume,$3);adaugare('F');} '{' {strcpy(locatie,$3);} bloc_instr '}'
+       ;
+
+type_f: INT 
+      | FLOAT
+      | VOID
+      ;
 
 var_glob: type ID ASSIGN value {strcpy(val,yytext);strcpy(locatie,"Global"); strcpy(nume,$2);adaugare('V');}
         ;
@@ -162,7 +182,7 @@ array: type ID '[' VAL ']' {
                     // arraytype.size=atoi(yytext);
                     strcpy(nume,yytext-4);
                     // adaugare_sir(nume, arraytype.size);
-                    strcpy(locatie,"Local"); 
+                    
                     strcpy(val,"[...]");
                     adaugare('V');
             //     }
@@ -198,7 +218,7 @@ arg1: type ID ASSIGN value
         }
         else 
         {
-            strcpy(nume,yytext);strcpy(locatie,"Local"); adaugare('V');
+            strcpy(nume,yytext);adaugare('V');
         }
         }
     | ID ASSIGN value
@@ -341,7 +361,7 @@ afirmatie: type ID ASSIGN value
         } 
              else 
                 {
-                    strcpy(nume,$2);strcpy(locatie,"Local"); adaugare('V');
+                    strcpy(nume,$2);adaugare('V');
                 }
             }
          | CHAR ID ASSIGN CHARACTER {
@@ -351,7 +371,7 @@ afirmatie: type ID ASSIGN value
             valid=0;
         }
             else
-            { strcpy(tip,"CHAR"); strcpy(nume, $2); strcpy(val,yytext); strcpy(locatie,"Local"); adaugare('V');}
+            { strcpy(tip,"CHAR"); strcpy(nume, $2); strcpy(val,yytext); adaugare('V');}
          }
          | STR ID ASSIGN STRING {
             if (declarare_multipla($2, count) == true)
@@ -360,7 +380,7 @@ afirmatie: type ID ASSIGN value
             valid=0;
         }
             else
-            { strcpy(tip,"STRING"); strcpy(nume, $2); strcpy(val,yytext); strcpy(locatie,"Local"); adaugare('V');}
+            { strcpy(tip,"STRING"); strcpy(nume, $2); strcpy(val,yytext); adaugare('V');}
          }
          | type ID 
          {
@@ -371,7 +391,7 @@ afirmatie: type ID ASSIGN value
         }
              else 
                 {
-                    {strcpy(val, "neinit"); }strcpy(nume,$2);strcpy(locatie,"Local"); adaugare('V');
+                    {strcpy(val, "neinit"); }strcpy(nume,$2);adaugare('V');
                 }
             }
          | CHAR ID {
@@ -381,7 +401,7 @@ afirmatie: type ID ASSIGN value
             valid=0;
         }
             else
-            { strcpy(tip,"CHAR");  strcpy(val, "neinit"); strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');}
+            { strcpy(tip,"CHAR");  strcpy(val, "neinit"); strcpy(nume, $2); adaugare('V');}
             }
          | STR ID {
             if (declarare_multipla($2, count) == true)
@@ -390,7 +410,7 @@ afirmatie: type ID ASSIGN value
             valid=0;
         }
             else
-            { strcpy(tip,"STRING");  strcpy(val, "neinit"); strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');}
+            { strcpy(tip,"STRING");  strcpy(val, "neinit"); strcpy(nume, $2); adaugare('V');}
          }
          | BOOL ID ASSIGN BOOL_VAL{
             if (declarare_multipla($2, count) == true)
@@ -399,7 +419,7 @@ afirmatie: type ID ASSIGN value
             valid=0;
         }
             else{
-                strcpy(tip,"BOOL");  strcpy(val,yytext); strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');
+                strcpy(tip,"BOOL");  strcpy(val,yytext); strcpy(nume, $2); adaugare('V');
             }
          }
          | BOOL ID {
@@ -409,7 +429,7 @@ afirmatie: type ID ASSIGN value
             valid=0;
         }
             else{
-                strcpy(tip,"BOOL");  strcpy(nume, $2); strcpy(locatie,"Local"); adaugare('V');
+                strcpy(tip,"BOOL");  strcpy(nume, $2); adaugare('V');
             }
          }
          | array

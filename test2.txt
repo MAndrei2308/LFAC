@@ -1,8 +1,24 @@
 intreg h:=11;
 
+functie intreg MyFunction (){
+    intreg as:=1;
+}
+real ddd:=111;
+
+clasa MyClass{
+  privat:
+    intreg aaaa;
+    intreg bbbb;
+
+  public:
+    functie void SetSum();
+    functie intreg GetSum();
+}
+
 incepe_program:{
     intreg x:=1;
     real f;
+    real ff:=7.9;
     constanta intreg c:=10;
     intreg a:=3;
     intreg b:=1;
@@ -10,11 +26,10 @@ incepe_program:{
     b:=b+1;
     c:=b+a;
     a:=x*3+5;
-    c:=f+b;
     caracter g:='a';
     bolean ok := adevarat;
     real v[10];
-    sir bbbb := "Denis";
+    sir bbb := "Denis";
     TypeOf(a);
     Eval(c);
     TypeOf(dd);

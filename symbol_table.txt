@@ -3,14 +3,22 @@ TABELUL DE SIMBOLURI PENTRU VARIABILE
 NUME           INFO           TIP            VALOARE        LOCATIE        
 ----------------------------------------------------------
 h              Variabila      INT            11             Global         
-x              Variabila      INT            128            Local          
-f              Variabila      FLOAT          neinit         Local          
-c              Variabila      CONST INT      10             Local          
-a              Variabila      INT            648            Local          
-b              Variabila      INT            5              Local          
-dd             Variabila      CONST INT      neinit         Local          
-g              Variabila      CHAR           'a'            Local          
-ok             Variabila      BOOL           adevarat       Local          
-v[10]          Variabila      FLOAT          [...]          Local          
-bbbb           Variabila      STRING         "Denis"        Local          
-main           Functie        STRING         -              Global         
+MyFunction     Functie        INT            -              Global         
+as             Variabila      INT            1              MyFunction     
+ddd            Variabila      FLOAT          111            Global         
+bbbb           Variabila      INT            neinit         MyClass        
+aaaa           Variabila      INT            neinit         MyClass        
+SetSum         Functie        INT            -              MyClass        
+GetSum         Functie        INT            -              MyClass        
+main           Functie        INT            -              Global         
+x              Variabila      INT            128            main           
+f              Variabila      FLOAT          neinit         main           
+ff             Variabila      FLOAT          7.9            main           
+c              Variabila      CONST INT      10             main           
+a              Variabila      INT            648            main           
+b              Variabila      INT            5              main           
+dd             Variabila      CONST INT      neinit         main           
+g              Variabila      CHAR           'a'            main           
+ok             Variabila      BOOL           adevarat       main           
+v[10]          Variabila      FLOAT          [...]          main           
+bbb            Variabila      STRING         "Denis"        main           
