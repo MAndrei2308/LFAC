@@ -10,6 +10,12 @@ bbbb           Variabila      INT            neinit         MyClass
 aaaa           Variabila      INT            neinit         MyClass        
 SetSum         Functie        INT            -              MyClass        
 GetSum         Functie        INT            -              MyClass        
+sc             Variabila      INT            neinit         MyStruct       
+sb             Variabila      INT            neinit         MyStruct       
+sa             Variabila      INT            neinit         MyStruct       
+C[101]         Variabila      INT            [...]          Global         
+B              Variabila      INT            neinit         Global         
+A              Variabila      INT            neinit         Global         
 main           Functie        INT            -              Global         
 x              Variabila      INT            128            main           
 f              Variabila      FLOAT          neinit         main           

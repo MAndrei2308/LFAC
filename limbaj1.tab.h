@@ -75,21 +75,22 @@ extern int yydebug;
     WHILE = 281,
     FUNCTION = 282,
     CLASS = 283,
-    ASSIGN = 284,
-    LT = 285,
-    GT = 286,
-    LE = 287,
-    GE = 288,
-    EQ = 289,
-    NE = 290,
-    ADD = 291,
-    SUB = 292,
-    MUL = 293,
-    DIV = 294,
-    AND = 295,
-    OR = 296,
-    INC = 297,
-    DEC = 298
+    STRUCT = 284,
+    ASSIGN = 285,
+    LT = 286,
+    GT = 287,
+    LE = 288,
+    GE = 289,
+    EQ = 290,
+    NE = 291,
+    ADD = 292,
+    SUB = 293,
+    MUL = 294,
+    DIV = 295,
+    AND = 296,
+    OR = 297,
+    INC = 298,
+    DEC = 299
   };
 #endif
 
@@ -104,7 +105,7 @@ union YYSTYPE
     char* strval;     // pentru tokenii care returnează șiruri de caractere
     char charval;
 
-#line 108 "limbaj1.tab.h"
+#line 109 "limbaj1.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -121,7 +121,7 @@ char* Eval(char* arg)
 
 %token <strval> ID INT FLOAT STR STRING CHARACTER VAL
 %token <charval> CHAR
-%token PUBLIC PRIVAT FLOAT_VAL BOOL_VAL BOOL CONST VOID RETURN START END EVAL TYPEOF IF ELSE FOR WHILE FUNCTION CLASS ASSIGN LT GT LE GE EQ NE ADD SUB MUL DIV AND OR INC DEC
+%token PUBLIC PRIVAT FLOAT_VAL BOOL_VAL BOOL CONST VOID RETURN START END EVAL TYPEOF IF ELSE FOR WHILE FUNCTION CLASS STRUCT ASSIGN LT GT LE GE EQ NE ADD SUB MUL DIV AND OR INC DEC
 %type <strval> expr value
 
 %left ASSIGN
@@ -145,12 +145,24 @@ main: START {strcpy(locatie,"Global"); strcpy(nume,"main");adaugare('F'); strcpy
 cfvs:  var_glob ';' cfvs 
     | functie cfvs {strcpy(locatie,"Global");}
     | CLASS ID '{' {strcpy(locatie,$2);} PRIVAT bloc_privat PUBLIC bloc_public'}' cfvs {strcpy(locatie,"Global");}
-    | STRUCT ID '{' {strcpy(locatie,$2);} bloc_struct'}' cfvs {strcpy(locatie,"Global");}
+    | STRUCT ID '{' {strcpy(locatie,$2);} bloc_struct'}' cfvs {strcpy(locatie,"Global");} lista_ID';'
     |
     ;
 
-bloc_struct: bloc_privat bloc_struct
-           | bloc_public bloc_struct
+lista_ID: ID ',' lista_ID {strcpy(nume,$1); strcpy(val,"neinit"); adaugare('V');}
+        | ID {strcpy(nume,$1); strcpy(val,"neinit"); adaugare('V');}
+        | ID '[' value ']' ',' lista_ID {strcpy(nume,yytext-4); strcpy(val,"neinit"); adaugare('V');}
+        | ID '[' value ']' {strcpy(nume,yytext-6); nume[strlen(nume)-1]='\0'; strcpy(val,"[...]"); adaugare('V');}
+        ;
+
+bloc_struct: type ID ';' bloc_struct { strcpy(nume,$2); strcpy(val,"neinit"); adaugare('V');}
+           | BOOL ID ';' bloc_struct { strcpy(nume,$2); strcpy(val,"neinit"); adaugare('V');}
+           | STRING ID ';' bloc_struct { strcpy(nume,$2); strcpy(val,"neinit"); adaugare('V');}
+           | CHAR ID ';' bloc_struct { strcpy(nume,$2); strcpy(val,"neinit"); adaugare('V');}
+           | type ID ASSIGN value ';' bloc_privat { strcpy(nume,$2); strcpy(val,$4); adaugare('V');}
+           | BOOL ID ASSIGN value ';' bloc_privat { strcpy(nume,$2); strcpy(val,$4); adaugare('V');}
+           | STRING ID ASSIGN value ';' bloc_privat { strcpy(nume,$2); strcpy(val,$4); adaugare('V');}
+           | CHAR ID ASSIGN value ';' bloc_privat { strcpy(nume,$2); strcpy(val,$4); adaugare('V');}
            |
            ;
 
